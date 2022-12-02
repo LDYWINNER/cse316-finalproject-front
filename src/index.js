@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './App.css';
-import App from './App.js';
+import App from './App';
+import "bulma/css/bulma.css";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
   <React.StrictMode>
