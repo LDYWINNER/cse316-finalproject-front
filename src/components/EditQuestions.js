@@ -8,7 +8,7 @@ import "../app.css";
 const EditQuestions = () => {
     return (
         <div>
-            <div class="box" style={{margin: "10px"}}>
+            <div style={{margin: "20px", backgroundColor:"transparent", display:"flex"}}>
                 <h4>Edit Questions</h4>
                 <button></button>
             </div>
@@ -20,36 +20,46 @@ const EditQuestions = () => {
 function QuestionBox () {
     let [modeList] = ["number", "boolean", "text", "multiple choice"];
     let [mode, setMode] = useState("number");
+    let [dropdown, setDropdown] = useState(false);
 
     return (
         <div class="box" style={{margin: "10px"}}>
             <input class="input" type="text" placeholder="Text input"></input>
-            <div class="dropdown is-active">
+            
             <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                <span>Dropdown button</span>
-                <span class="icon is-small">
-                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={()=>{
+                    setDropdown(true);
+                }}>
+                    <span>Dropdown button</span>
+                    <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
                 </button>
             </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            {
+                dropdown ?  
+                <div class="dropdown is-active">
+                <div class="dropdown-menu" id="dropdown-menu3" role="menu">
                 <div class="dropdown-content">
-                <a href="#" class="dropdown-item">
-                    Dropdown item
-                </a>
-                <a class="dropdown-item">
-                    Other dropdown item
-                </a>
-                <a href="#" class="dropdown-item is-active">
-                    Active dropdown item
-                </a>
-                <a href="#" class="dropdown-item">
-                    Other dropdown item
-                </a>
+                    <a href="#" class="dropdown-item">
+                        number
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        boolean
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        text
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        multiple choice
+                    </a>
                 </div>
-            </div>
-            </div>
+                </div>
+                </div>
+                : 
+                <></>
+            }
+
         </div>
     )
 }
