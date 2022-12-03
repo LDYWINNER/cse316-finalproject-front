@@ -51,7 +51,10 @@ button:hover {
 .logo {
   font-size: 24px;
   font-weight: 800;
+  margin: 5px;
 }
+
+
 
 @media (max-width: 600px) {
   .logo {

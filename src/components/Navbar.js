@@ -22,21 +22,23 @@ const Navbar = () => {
                 <li className='logo'>
                     <NavLink to='/' style={{color:"black"}}>Day Logger</NavLink>
                 </li>
-                <li>
-                    <NavLink to='/logDay' style={{color:"black"}} activeStyle={{color: '#66bfbf'}}>
-                        Log Day
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to='/editQuestions' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
-                        Edit Questions
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to='/dashboard' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
-                        View Data
-                    </NavLink>
-                </li>
+                <div style={{display: 'flex'}}>
+                    <li style={{margin: '10px'}}>
+                        <NavLink to='/logDay' style={{color:"black"}} activeStyle={{color: '#66bfbf'}}>
+                            Log Day
+                        </NavLink>
+                    </li>
+                    <li style={{margin: '10px'}}>
+                        <NavLink to='/editQuestions' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
+                            Edit Questions
+                        </NavLink>
+                    </li>
+                    <li style={{margin: '10px'}}>
+                        <NavLink to='/dashboard' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
+                            View Data
+                        </NavLink>
+                    </li>
+                </div>
                 <div className="buttons">
                     <button onClick={Logout} className="button is-light">
                         Log Out
