@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import EditQuestions from './components/EditQuestions';
 import Register from "./components/Register";
+import LogDay from './components/LogDay';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
         <Route path="/editQuestions">
           <Navbar />
           <EditQuestions />
+        </Route>
+        <Route path="/logDay">
+          <Navbar />
+          <LogDay />
         </Route>
       </Switch>
     </BrowserRouter>

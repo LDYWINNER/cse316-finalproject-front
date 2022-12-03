@@ -23,7 +23,7 @@ const Navbar = () => {
                     <NavLink to='/' style={{color:"black"}}>Day Logger</NavLink>
                 </li>
                 <li>
-                    <NavLink to='/dashboard' style={{color:"black"}} activeStyle={{color: '#66bfbf'}}>
+                    <NavLink to='/logDay' style={{color:"black"}} activeStyle={{color: '#66bfbf'}}>
                         Log Day
                     </NavLink>
                 </li>
