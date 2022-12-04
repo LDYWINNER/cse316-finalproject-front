@@ -7,7 +7,6 @@ import { SvgIconComponent } from "@mui/icons-material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
-
 const EditQuestions = () => {
     let [boxNum, setBoxNum] = useState([]);
 
@@ -15,7 +14,7 @@ const EditQuestions = () => {
     return (
         <div>
             <div style={{margin: "20px", backgroundColor:"transparent", display:"flex"}}>
-                <h4>Edit Questions</h4>
+                <strong>Edit Questions</strong>
                 <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={() => {
                     let tmp = [...boxNum];
                     tmp.unshift(0)
@@ -49,11 +48,12 @@ function QuestionBox () {
     return (
         <div className="box" style={{margin: "10px"}}>
             <input className="input" type="text" placeholder="Text input"></input>
-            <div className="dropdown-trigger">
+
+            <div className="dropdown-trigger" style={{marginTop: '10px'}}>
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={()=>{
                     setDropdown(true);
                 }}>
-                    <span>Dropdown button</span>
+                    <span>{mode}</span>
                     <span className="icon is-small">
                         <i className="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
@@ -64,16 +64,28 @@ function QuestionBox () {
                 <div className="dropdown is-active">
                 <div className="dropdown-menu" id="dropdown-menu3" role="menu">
                 <div className="dropdown-content">
-                    <a href="#" className="dropdown-item">
+                    <a href="#" className="dropdown-item" onClick={(e)=>{
+                        setMode("number");
+                        setDropdown(false);
+                    }}>
                         number
                     </a>
-                    <a href="#" className="dropdown-item">
+                    <a href="#" className="dropdown-item" onClick={(e)=>{
+                        setMode("boolean");
+                        setDropdown(false);
+                    }}>
                         boolean
                     </a>
-                    <a href="#" className="dropdown-item">
+                    <a href="#" className="dropdown-item" onClick={(e)=>{
+                        setMode("text");
+                        setDropdown(false);
+                    }}>
                         text
                     </a>
-                    <a href="#" className="dropdown-item">
+                    <a href="#" className="dropdown-item" onClick={(e)=>{
+                        setMode("multiple choice");
+                        setDropdown(false);                        
+                    }}>
                         multiple choice
                     </a>
                 </div>
@@ -82,7 +94,23 @@ function QuestionBox () {
                 : 
                 <></>
             }
-
+            {
+                mode == "multiple choice"
+                ?
+                <div className="control">
+                    <label className="radio">
+                        <input type="radio" name="answer"/>
+                        Yes
+                    </label>
+                    <div></div>
+                    <label className="radio">
+                        <input type="radio" name="answer"/>
+                        No
+                    </label>
+                </div>
+                :
+                <></>
+            }
         </div>
     )
 }
