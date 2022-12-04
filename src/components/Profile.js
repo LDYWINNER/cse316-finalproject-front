@@ -10,8 +10,16 @@ const Profile = () => {
     return(
         <div>
             <div style={{margin: "20px", backgroundColor:"transparent", display:"flex"}}>
-                <strong>Edit Questions</strong>
+                <strong>Edit Profile</strong>
             </div>
+            <div className="box" style={{margin: "10px"}}></div>
+            <div className="box" style={{margin: "10px"}}></div>
+            <div className="box" style={{margin: "10px"}}></div>
+            <div className="box" style={{margin: "10px"}}></div>
+            <br></br>
+
+
+
         </div>
     )
 }
