@@ -28,11 +28,10 @@ const EditQuestions = () => {
             {
                 boxNum.map(function(a, i){
                     return(
-                        <QuestionBox></QuestionBox>
+                        <div key={i}><QuestionBox></QuestionBox></div>
                     )
                 })
             }
-            
         </div>
     )
 }
