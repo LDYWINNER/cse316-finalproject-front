@@ -24,7 +24,6 @@ const EditQuestions = () => {
 
                 </button>
             </div>
-            <QuestionBox/>
             {
                 boxNum.map(function(a, i){
                     return(
@@ -97,16 +96,17 @@ function QuestionBox () {
             {
                 mode == "multiple choice"
                 ?
-                <div className="control">
-                    <label className="radio">
-                        <input type="radio" name="answer"/>
-                        Yes
-                    </label>
+                <div className="control" style={{marginTop:'10px'}}>
+                    
+                    <input type="radio" name="display" disabled/>
+                    <input className="multiChoice" type='text' name='multi'></input>
                     <div></div>
-                    <label className="radio">
-                        <input type="radio" name="answer"/>
-                        No
-                    </label>
+                    <input type="radio" name="display" disabled/>
+                    <input className="multiChoice" type='text' name='multi'></input>
+                    <div></div>
+                    <input type="radio" name="display" disabled/>
+                    <input className="multiChoice" type='text' name='multi'></input>
+                    
                 </div>
                 :
                 <></>

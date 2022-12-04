@@ -54,6 +54,14 @@ button:hover {
   margin: 5px;
 }
 
+.multiChoice {
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:1;
+  margin: 5px;  
+}
+
 
 
 @media (max-width: 600px) {
