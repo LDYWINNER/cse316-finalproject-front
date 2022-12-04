@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import "../app.css";
+import "../css/app.css";
 
 
 const LogDay = () => {
