@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import EditQuestions from './components/EditQuestions';
 import Register from "./components/Register";
 import LogDay from './components/LogDay';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
         <Route path="/logDay">
           <Navbar />
           <LogDay />
+        </Route>
+        <Route path="/profile">
+          <Navbar />
+          <Profile />
         </Route>
       </Switch>
     </BrowserRouter>

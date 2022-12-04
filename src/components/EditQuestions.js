@@ -9,26 +9,31 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const EditQuestions = () => {
-    let [boxNum, setBoxNum] = useState([]);
-
+    let [boxList, setBoxList] = useState([]);
+    let deleteBox = (index) => {
+        let copy = [...boxList];
+        copy.splice(index, 1);
+        setBoxList(copy);
+    }
 
     return (
         <div>
             <div style={{margin: "20px", backgroundColor:"transparent", display:"flex"}}>
                 <strong>Edit Questions</strong>
                 <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={() => {
-                    let tmp = [...boxNum];
-                    tmp.unshift(0)
-                    setBoxNum(tmp);
+                    let tmp = [...boxList];
+                    let box = {boxType: "number", text: "", multi: []}
+                    tmp.unshift(box)
+                    setBoxList(tmp);
                 }}>
                 <AddCircleOutlineIcon sx={{ color: "black" }}></AddCircleOutlineIcon>
 
                 </button>
             </div>
             {
-                boxNum.map(function(a, i){
+                boxList.map(function(a, i){
                     return(
-                        <div key={i}><QuestionBox></QuestionBox></div>
+                        <div key={i}><QuestionBox boxList={boxList} deleteBox={deleteBox} box={a} index={i}></QuestionBox></div>
                     )
                 })
             }
@@ -39,9 +44,9 @@ const EditQuestions = () => {
 
 
 
-function QuestionBox () {
-    let [modeList] = ["number", "boolean", "text", "multiple choice"];
-    let [mode, setMode] = useState("number");
+function QuestionBox (props) {
+    // let [modeList] = ["number", "boolean", "text", "multiple choice"];
+    let [mode, setMode] = useState(props.box.boxType);
     let [dropdown, setDropdown] = useState(false);
 
     return (
@@ -58,10 +63,10 @@ function QuestionBox () {
                     </span> */}
                 </button>
                 <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={()=>{
-                
-            }}>
+                    props.deleteBox(props.index);
+                }}>
                 <DeleteOutlineIcon></DeleteOutlineIcon>
-            </button>
+                </button>
             </div>
 
             {
@@ -103,7 +108,6 @@ function QuestionBox () {
                 mode == "multiple choice"
                 ?
                 <div className="control" style={{marginTop:'10px'}}>
-                    
                     <input type="radio" name="display" disabled/>
                     <input className="multiChoice" type='text' name='multi'></input>
                     <div></div>
@@ -112,7 +116,6 @@ function QuestionBox () {
                     <div></div>
                     <input type="radio" name="display" disabled/>
                     <input className="multiChoice" type='text' name='multi'></input>
-                    
                 </div>
                 :
                 <></>

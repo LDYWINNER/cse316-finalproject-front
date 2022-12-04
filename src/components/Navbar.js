@@ -39,11 +39,16 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                 </div>
-                <div className="buttons">
+                <li style={{margin: '10px'}}>
+                        <NavLink to='/profile' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
+                            profile
+                        </NavLink>
+                </li>
+                {/* <div className="buttons">
                     <button onClick={Logout} className="button is-light">
                         Log Out
                     </button>
-                </div>
+                </div> */}
 
             </ul>
         </nav>
