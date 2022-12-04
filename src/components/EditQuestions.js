@@ -6,6 +6,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { SvgIconComponent } from "@mui/icons-material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const EditQuestions = () => {
     let [boxNum, setBoxNum] = useState([]);
@@ -52,10 +53,10 @@ function QuestionBox () {
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={()=>{
                     setDropdown(true);
                 }}>
-                    <span>{mode}</span>
-                    <span className="icon is-small">
+                    <span style={{display: 'flex'}}>{mode}<KeyboardArrowDownIcon style={{marginLeft:'10px'}}/></span>
+                    {/* <span className="icon is-small">
                         <i className="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
+                    </span> */}
                 </button>
                 <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={()=>{
                 
