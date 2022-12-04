@@ -5,7 +5,7 @@ import "../app.css";
 import SvgIcon from "@mui/material/SvgIcon";
 import { SvgIconComponent } from "@mui/icons-material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const EditQuestions = () => {
     let [boxNum, setBoxNum] = useState([]);
@@ -48,7 +48,7 @@ function QuestionBox () {
         <div className="box" style={{margin: "10px"}}>
             <input className="input" type="text" placeholder="Text input"></input>
 
-            <div className="dropdown-trigger" style={{marginTop: '10px'}}>
+            <div className="dropdown-trigger" style={{marginTop: '10px', display: 'flex'}}>
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={()=>{
                     setDropdown(true);
                 }}>
@@ -57,7 +57,13 @@ function QuestionBox () {
                         <i className="fas fa-angle-down" aria-hidden="true"></i>
                     </span>
                 </button>
+                <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={()=>{
+                
+            }}>
+                <DeleteOutlineIcon></DeleteOutlineIcon>
+            </button>
             </div>
+
             {
                 dropdown ?  
                 <div className="dropdown is-active">
