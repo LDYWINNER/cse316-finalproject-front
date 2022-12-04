@@ -62,6 +62,16 @@ button:hover {
   margin: 5px;  
 }
 
+.removeBtn {
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:1;
+  margin: 5px;
+  font-size: 16px;
+  background-color: transparent;   
+}
+
 
 
 @media (max-width: 600px) {

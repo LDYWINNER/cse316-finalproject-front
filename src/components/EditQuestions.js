@@ -59,9 +59,6 @@ function QuestionBox (props) {
                     setDropdown(true);
                 }}>
                     <span style={{display: 'flex'}}>{mode}<KeyboardArrowDownIcon style={{marginLeft:'10px'}}/></span>
-                    {/* <span className="icon is-small">
-                        <i className="fas fa-angle-down" aria-hidden="true"></i>
-                    </span> */}
                 </button>
                 <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={()=>{
                     props.deleteBox(props.index);
