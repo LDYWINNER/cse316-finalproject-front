@@ -8,7 +8,7 @@ const LogDay = () => {
 
 
 
-    return(
+    return (
         <div>
 
         </div>

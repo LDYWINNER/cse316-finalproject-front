@@ -35,17 +35,20 @@ const Login = () => {
                                 <div className="field mt-5">
                                     <label className="label">Email or Username</label>
                                     <div className="controls">
-                                        <input type="text" className="input" placeholder="Username" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                        <input type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="field mt-5">
                                     <label className="label">Password</label>
                                     <div className="controls">
-                                        <input type="password" className="input" placeholder="******" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                        <input type="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="field mt-5">
                                     <button className="button is-success is-fullwidth">Login</button>
+                                </div>
+                                <div className="field mt-5">
+                                    <button className="button is-success is-fullwidth" onClick={() => history.push("/register")}>Go Register</button>
                                 </div>
                             </form>
                         </div>
