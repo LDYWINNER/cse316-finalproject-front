@@ -34,7 +34,7 @@ const Profile = () => {
                 <div style={{display: 'flex'}}>
                     <img src={image} style={{margin:'auto', width: '70px', borderRadius: '70%'}}></img>
                     <input type="file" ref={fileInput} accept="image/*" style={{display: 'none'}} onChange={onChange}/>
-                    <button className="button is-primary" style={{margin: "auto"}} onClick={(e)=>{fileInput.current.click()}}>Choose new image</button>
+                    <button className="button is-primary" style={{margin: "auto", borderRadius: '12px'}} onClick={(e)=>{fileInput.current.click()}}>Choose new image</button>
                     <button className='removeBtn' style={{margin: "auto"}} onClick={(e)=>{
                         setImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
                     }}>Remove image</button>
