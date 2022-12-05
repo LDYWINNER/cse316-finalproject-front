@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import "../css/app.css";
 import { useCallback, useRef, ChangeEvent } from 'react';
 
@@ -21,6 +22,17 @@ const Profile = () => {
                 }
             }
             reader.readAsDataURL(e.target.files[0])
+        }
+    
+        const history = useHistory();
+
+        const Logout = async () => {
+            try {
+                await axios.delete('http://localhost:8080/logout');
+                history.push("/");
+            } catch (error) {
+                console.log(error);
+            }
         }
 
     return(
@@ -54,6 +66,10 @@ const Profile = () => {
                 <strong>Address</strong>
                 <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Address"></input>
                 <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Detail Address"></input>
+            </div>
+            <div style={{display: 'flex'}}>
+                <button className="button is-danger" style={{margin: 'auto', width: '100px'}}>Save</button>
+                <button className='removeBtn' style={{margin: "auto"}} onClick={Logout}>Logout</button>
             </div>
             <br></br>
 

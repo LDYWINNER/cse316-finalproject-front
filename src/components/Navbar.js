@@ -6,16 +6,7 @@ import { Routes, Route, NavLink, Link, Outlet } from 'react-router-dom'
 
 
 const Navbar = () => {
-    const history = useHistory();
 
-    const Logout = async () => {
-        try {
-            await axios.delete('http://localhost:8080/logout');
-            history.push("/");
-        } catch (error) {
-            console.log(error);
-        }
-    }
     return (
         <nav className='navigation' style={{ backgroundColor: "white" }}>
             <ul data-visible="false" className="primary-navigation" style={{ backgroundColor: "white" }}>
