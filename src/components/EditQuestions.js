@@ -37,6 +37,7 @@ const EditQuestions = () => {
                     )
                 })
             }
+            <button className="button is-danger" style={{margin: '20px', width: '100px'}}>Save</button>
             <br></br>
         </div>
     )
