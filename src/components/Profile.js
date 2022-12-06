@@ -70,7 +70,7 @@ const Profile = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const updateUserData = (e) => {
         e.preventDefault();
@@ -82,7 +82,7 @@ const Profile = (props) => {
         }).then((response) => {
             console.log(response);
         });
-    }
+    };
 
     return (
         <div>
@@ -105,7 +105,6 @@ const Profile = (props) => {
                 <div className="box" style={{ margin: "10px" }}>
                     <strong>Name</strong>
                     <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Name" onChange={(e) => {
-                        // tmpUser.name = e.target.value;
                         setNewName(e.target.value);
                     }}></input>
 
@@ -113,7 +112,6 @@ const Profile = (props) => {
                 <div className="box" style={{ margin: "10px" }}>
                     <strong>Email</strong>
                     <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Email" onChange={(e) => {
-                        // tmpUser.email = e.target.value;
                         setNewEmail(e.target.value);
                     }}></input>
 
@@ -121,11 +119,9 @@ const Profile = (props) => {
                 <div className="box" style={{ margin: "10px" }}>
                     <strong>Address</strong>
                     <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Address" onChange={(e) => {
-                        // tmpUser.address1 = e.target.value;
                         setNewFirstAddress(e.target.value);
                     }}></input>
                     <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Detail Address" onChange={(e) => {
-                        // tmpUser.address2 = e.target.value;
                         setNewSecondAddress(e.target.value);
                     }}></input>
                 </div>
