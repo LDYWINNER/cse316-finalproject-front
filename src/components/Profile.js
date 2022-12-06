@@ -13,6 +13,10 @@ const Profile = (props) => {
     //     address1: "",
     //     address2: ""
     // }
+    const [newName, setNewName] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [newFirstAddress, setNewFirstAddress] = useState("");
+    const [newSecondAddress, setNewSecondAddress] = useState("");
     let tmpUser = {
         name: "",
         email: "",
@@ -68,6 +72,18 @@ const Profile = (props) => {
         }
     }
 
+    const updateUserData = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:8080/update', {
+            newName: newName,
+            newEmail: newEmail,
+            newFirstAddress: newFirstAddress,
+            newSecondAddress: newSecondAddress,
+        }).then((response) => {
+            console.log(response);
+        });
+    }
+
     return (
         <div>
             <div style={{ margin: "20px", backgroundColor: "transparent", display: "flex" }}>
@@ -85,43 +101,46 @@ const Profile = (props) => {
                     }}>Remove image</button>
                 </div>
             </div>
-            <div className="box" style={{ margin: "10px" }}>
-                <strong>Name</strong>
-                <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Name" onChange={(e) => {
-                    tmpUser.name = e.target.value;
-                }}></input>
+            <form onSubmit={updateUserData}>
+                <div className="box" style={{ margin: "10px" }}>
+                    <strong>Name</strong>
+                    <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Name" onChange={(e) => {
+                        // tmpUser.name = e.target.value;
+                        setNewName(e.target.value);
+                    }}></input>
 
-            </div>
-            <div className="box" style={{ margin: "10px" }}>
-                <strong>Email</strong>
-                <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Email" onChange={(e) => {
-                    tmpUser.email = e.target.value;
-                }}></input>
+                </div>
+                <div className="box" style={{ margin: "10px" }}>
+                    <strong>Email</strong>
+                    <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Email" onChange={(e) => {
+                        // tmpUser.email = e.target.value;
+                        setNewEmail(e.target.value);
+                    }}></input>
 
-            </div>
-            <div className="box" style={{ margin: "10px" }}>
-                <strong>Address</strong>
-                <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Address" onChange={(e) => {
-                    tmpUser.address1 = e.target.value;
-                }}></input>
-                <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Detail Address" onChange={(e) => {
-                    tmpUser.address2 = e.target.value;
-                }}></input>
-            </div>
-            <div style={{ display: 'flex' }}>
-                <button className="button is-danger" style={{ margin: 'auto', width: '100px' }} onClick={(e) => {
-                    if (isEmail(tmpUser.email)) {
-                        uploadImage();
-                        props.setUser(tmpUser);
-                        console.log(props.image);
-                    }
-                }}>Save</button>
-                <button className='removeBtn' style={{ margin: "auto" }} onClick={Logout}>Logout</button>
-            </div>
+                </div>
+                <div className="box" style={{ margin: "10px" }}>
+                    <strong>Address</strong>
+                    <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Address" onChange={(e) => {
+                        // tmpUser.address1 = e.target.value;
+                        setNewFirstAddress(e.target.value);
+                    }}></input>
+                    <input style={{ marginTop: "10px" }} className="input" type="text" placeholder="Detail Address" onChange={(e) => {
+                        // tmpUser.address2 = e.target.value;
+                        setNewSecondAddress(e.target.value);
+                    }}></input>
+                </div>
+                <div style={{ display: 'flex' }}>
+                    <button className="button is-danger" style={{ margin: 'auto', width: '100px' }} onClick={(e) => {
+                        if (isEmail(tmpUser.email)) {
+                            uploadImage();
+                            props.setUser(tmpUser);
+                            console.log(props.image);
+                        }
+                    }}>Save</button>
+                    <button className='removeBtn' style={{ margin: "auto" }} onClick={Logout}>Logout</button>
+                </div>
+            </form>
             <br></br>
-
-
-
         </div>
     )
 }
