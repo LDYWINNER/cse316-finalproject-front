@@ -17,12 +17,7 @@ const Profile = (props) => {
     const [newEmail, setNewEmail] = useState("");
     const [newFirstAddress, setNewFirstAddress] = useState("");
     const [newSecondAddress, setNewSecondAddress] = useState("");
-    let tmpUser = {
-        name: "",
-        email: "",
-        address1: "",
-        address2: ""
-    };
+
     const uploadImage = () => {
         const data = new FormData()
         data.append("file", props.image)
@@ -127,10 +122,10 @@ const Profile = (props) => {
                 </div>
                 <div style={{ display: 'flex' }}>
                     <button className="button is-danger" style={{ margin: 'auto', width: '100px' }} onClick={(e) => {
-                        if (isEmail(tmpUser.email)) {
+                        if (isEmail(newEmail)) {
                             uploadImage();
-                            props.setUser(tmpUser);
                             console.log(props.image);
+
                         }
                     }}>Save</button>
                     <button className='removeBtn' style={{ margin: "auto" }} onClick={Logout}>Logout</button>

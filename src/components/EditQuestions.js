@@ -44,7 +44,6 @@ const EditQuestions = () => {
                 }}>
                     
                 <AddCircleOutlineIcon sx={{ color: "black" }}></AddCircleOutlineIcon>
-
                 </button>
             </div>
             {
