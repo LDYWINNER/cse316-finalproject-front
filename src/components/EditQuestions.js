@@ -31,6 +31,13 @@ const EditQuestions = () => {
         setBoxList(copy);
     }
 
+    const updateQuestions = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:8080/editQuestions', boxList).then((response) => {
+            console.log(response);
+        });
+    };
+
     return (
         <div>
             <div style={{margin: "20px", backgroundColor:"transparent", display:"flex"}}>
@@ -56,7 +63,7 @@ const EditQuestions = () => {
                 })
             }
             <button className="button is-danger" style={{margin: '20px', width: '100px'}} onClick={(e)=>{
-                // 123
+                updateQuestions();
             }}>Save</button>
             <br></br>
         </div>
