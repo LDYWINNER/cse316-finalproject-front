@@ -11,6 +11,14 @@ import Profile from './components/Profile';
 
 function App() {
   let [image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+  // to store image url from Cloudinary
+  let [imageUrl, setImageUrl] = useState("");
+  let [user, setUser] = useState({
+    name: "",
+    email: "",
+    address1: "",
+    address2: ""
+  });
 
   return (
     <BrowserRouter>
@@ -35,7 +43,7 @@ function App() {
         </Route>
         <Route path="/profile">
           <Navbar image={image} setImage={setImage}/>
-          <Profile image={image} setImage={setImage}/>
+          <Profile imageUrl={imageUrl} setImageUrl={setImageUrl} user={user} setUser={setUser} image={image} setImage={setImage}/>
         </Route>
       </Switch>
     </BrowserRouter>

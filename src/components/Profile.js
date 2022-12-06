@@ -7,7 +7,34 @@ import { useCallback, useRef, ChangeEvent } from 'react';
 
 const Profile = (props) => {
     // const [image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-    const fileInput = useRef(null)
+    // let [user, setUser] = {
+    //     name: "",
+    //     email: "",
+    //     address1: "",
+    //     address2: ""
+    // }
+    let tmpUser = {
+        name: "",
+        email: "",
+        address1: "",
+        address2: ""
+    };
+    const uploadImage = () => {
+        const data = new FormData()
+        data.append("file", props.image)
+        data.append("upload_preset", "cse316_profile")
+        data.append("cloud_name","dsaacssba")
+        fetch("https://api.cloudinary.com/v1_1/dsaacssba/image/upload",{
+        method:"post",
+        body: data
+        })
+        .then(resp => resp.json())
+        .then(data => {
+        props.setImageUrl(data.url)
+        })
+        .catch(err => console.log(err))
+    }
+    const fileInput = useRef(null);
     const onChange = (e) => {
         if(e.target.files[0]){
                 props.setImage(e.target.files[0])
@@ -23,6 +50,12 @@ const Profile = (props) => {
             }
             reader.readAsDataURL(e.target.files[0])
         }
+        const isEmail = (email) => {
+            const emailRegex =
+              /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+        
+            return emailRegex.test(email);
+          };
     
         const history = useHistory();
 
@@ -34,6 +67,7 @@ const Profile = (props) => {
                 console.log(error);
             }
         }
+        
 
     return(
         <div>
@@ -54,27 +88,41 @@ const Profile = (props) => {
             </div>
             <div className="box" style={{margin: "10px"}}>
                 <strong>Name</strong>
-                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Name"></input>
+                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Name" onChange={(e)=>{
+                    tmpUser.name = e.target.value;
+                }}></input>
 
             </div>
             <div className="box" style={{margin: "10px"}}>
                 <strong>Email</strong>
-                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Email"></input>
+                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Email" onChange={(e)=>{
+                    tmpUser.email = e.target.value;
+                }}></input>
 
             </div>
             <div className="box" style={{margin: "10px"}}>
                 <strong>Address</strong>
-                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Address"></input>
-                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Detail Address"></input>
+                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Address" onChange={(e)=>{
+                    tmpUser.address1 = e.target.value;
+                }}></input>
+                <input style={{marginTop: "10px"}} className="input" type="text" placeholder="Detail Address" onChange={(e)=>{
+                    tmpUser.address2 = e.target.value;
+                }}></input>
             </div>
             <div style={{display: 'flex'}}>
-                <button className="button is-danger" style={{margin: 'auto', width: '100px'}}>Save</button>
+                <button className="button is-danger" style={{margin: 'auto', width: '100px'}} onClick={(e)=>{
+                    if (isEmail(tmpUser.email)){
+                        uploadImage();
+                        props.setUser(tmpUser);
+                        console.log(props.image);
+                    }
+                }}>Save</button>
                 <button className='removeBtn' style={{margin: "auto"}} onClick={Logout}>Logout</button>
             </div>
             <br></br>
 
 
-
+            
         </div>
     )
 }
