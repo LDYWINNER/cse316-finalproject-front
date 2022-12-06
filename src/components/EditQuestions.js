@@ -25,14 +25,13 @@ const EditQuestions = () => {
         copy[index].text = text.toString();
         setBoxList(copy);
     }
-    let changeMulti = (index, multi) => {
+    let changeMulti = (index, multi, multiIndex) => {
         let copy = [...boxList];
-        copy[index].multi = multi;
+        copy[index].multi[multiIndex] = multi;
         setBoxList(copy);
     }
 
     const updateQuestions = (e) => {
-        e.preventDefault();
         axios.post('http://localhost:8080/editQuestions', boxList).then((response) => {
             console.log(response);
         });
@@ -44,7 +43,7 @@ const EditQuestions = () => {
                 <strong>Edit Questions</strong>
                 <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={async () => {
                     let tmp = [...boxList];
-                    let box = {boxType: "number", text: "", multi: []}
+                    let box = {boxType: "number", text: "", multi: ['','','']}
                     tmp.splice(0, 0, box);
                     setBoxList(tmp);
                     console.log(boxList);
@@ -151,7 +150,8 @@ function QuestionBox (props) {
                     <input type="radio" name="display" disabled/>
                     <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
                         multi[0] = e.target.value
-                        props.changeMulti(props.index, multi);
+                        props.changeMulti(props.index, e.target.value, 0);
+                        console.log(props.boxList.multi);
                         // multi.splice(0, 1, e.target.value);
                     }
                     }></input>
@@ -159,7 +159,8 @@ function QuestionBox (props) {
                     <input type="radio" name="display" disabled/>
                     <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
                         multi[1] = e.target.value
-                        props.changeMulti(props.index, multi);
+                        props.changeMulti(props.index, e.target.value, 1);
+                        console.log(multi);
 
                         // multi.splice(1, 1, e.target.value);
                     }}></input>
@@ -167,7 +168,8 @@ function QuestionBox (props) {
                     <input type="radio" name="display" disabled/>
                     <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
                         multi[2] = e.target.value
-                        props.changeMulti(props.index, multi);
+                        props.changeMulti(props.index, e.target.value, 2);
+                        console.log(multi);
 
                         // multi.splice(2, 1, e.target.value);
                     }}></input>
