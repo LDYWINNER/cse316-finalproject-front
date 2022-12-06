@@ -5,7 +5,7 @@ import "../css/app.css";
 import { Routes, Route, NavLink, Link, Outlet } from 'react-router-dom'
 
 
-const Navbar = () => {
+const Navbar = (props) => {
 
     return (
         <nav className='navigation' style={{ backgroundColor: "white" }}>
@@ -32,7 +32,7 @@ const Navbar = () => {
                 </div>
                 <li style={{margin: '10px'}}>
                         <NavLink to='/profile' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
-                            profile
+                            <img src={props.image} style={{margin:'auto', width: '45px', borderRadius: '70%'}}></img>   
                         </NavLink>
                 </li>
             </ul>

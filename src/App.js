@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
@@ -9,6 +10,8 @@ import LogDay from './components/LogDay';
 import Profile from './components/Profile';
 
 function App() {
+  let [image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+
   return (
     <BrowserRouter>
       <Switch>
@@ -19,20 +22,20 @@ function App() {
           <Register />
         </Route>
         <Route path="/dashboard">
-          <Navbar />
+          <Navbar image={image} setImage={setImage}/>
           <Dashboard />
         </Route>
         <Route path="/editQuestions">
-          <Navbar />
+          <Navbar image={image} setImage={setImage}/>
           <EditQuestions />
         </Route>
         <Route path="/logDay">
-          <Navbar />
+          <Navbar image={image} setImage={setImage}/>
           <LogDay />
         </Route>
         <Route path="/profile">
-          <Navbar />
-          <Profile />
+          <Navbar image={image} setImage={setImage}/>
+          <Profile image={image} setImage={setImage}/>
         </Route>
       </Switch>
     </BrowserRouter>
