@@ -106,11 +106,11 @@ function BooleanBox() {
         <div className="box" style={{margin: "10px"}}>
             <div>text</div>
             <div style={{display:'flex'}}>
-                <input type='radio' value='True' style={{marginRight:'5px'}} onChange={(e)=>{
+                <input type='radio' value='True' name='boolean' style={{marginRight:'5px'}} onChange={(e)=>{
 
                 }} ></input> True
                 <div style={{marginRight:'50px'}}></div>
-                <input type='radio' value='False' style={{marginRight:'5px'}} onChange={(e)=>{
+                <input type='radio' value='False' name='boolean' style={{marginRight:'5px'}} onChange={(e)=>{
                     
                 }}></input> False
             </div>
