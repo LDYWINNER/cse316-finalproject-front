@@ -31,37 +31,39 @@ const EditQuestions = () => {
         setBoxList(copy);
     }
 
-    const updateQuestions = (e) => {
-        axios.post('http://localhost:8080/editQuestions', boxList).then((response) => {
+    const updateQuestions = () => {
+        axios.post('http://localhost:8080/editQuestions', {
+            boxList: boxList
+        }).then((response) => {
             console.log(response);
         });
     };
 
     return (
         <div>
-            <div style={{margin: "20px", backgroundColor:"transparent", display:"flex"}}>
+            <div style={{ margin: "20px", backgroundColor: "transparent", display: "flex" }}>
                 <strong>Edit Questions</strong>
-                <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={async () => {
+                <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={async () => {
                     let tmp = [...boxList];
-                    let box = {boxType: "number", text: "", multi: ['','','']}
+                    let box = {boxType: "number", text: "", multi: []}
                     tmp.splice(0, 0, box);
                     setBoxList(tmp);
                     console.log(boxList);
                 }}>
-                    
-                <AddCircleOutlineIcon sx={{ color: "black" }}></AddCircleOutlineIcon>
+
+                    <AddCircleOutlineIcon sx={{ color: "black" }}></AddCircleOutlineIcon>
                 </button>
             </div>
             {
-                boxList.map(function(a, i){
+                boxList.map(function (a, i) {
                     console.log(a)
-                    return(
+                    return (
                         <div key={i}><QuestionBox boxList={boxList} changeType={changeType} changeText={changeText} deleteBox={deleteBox} changeMulti={changeMulti} box={a} index={i}></QuestionBox></div>
-                            
+
                     )
                 })
             }
-            <button className="button is-danger" style={{margin: '20px', width: '100px'}} onClick={(e)=>{
+            <button className="button is-danger" style={{ margin: '20px', width: '100px' }} onClick={(e) => {
                 updateQuestions();
             }}>Save</button>
             <br></br>
@@ -71,77 +73,77 @@ const EditQuestions = () => {
 
 
 
-function QuestionBox (props) {
+function QuestionBox(props) {
     // let [modeList] = ["number", "boolean", "text", "multiple choice"];
     let [mode, setMode] = useState(props.box.boxType);
     let [dropdown, setDropdown] = useState(false);
     let multi = ['', '', ''];
 
     return (
-        <div className="box" style={{margin: "10px"}}>
-            <input className="input" type="text" placeholder="Text input" onChange={(e)=>{
+        <div className="box" style={{ margin: "10px" }}>
+            <input className="input" type="text" placeholder="Text input" onChange={(e) => {
                 props.changeText(props.index, e.target.value);
             }}></input>
 
-            <div className="dropdown-trigger" style={{marginTop: '10px', display: 'flex'}}>
-                <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={()=>{
+            <div className="dropdown-trigger" style={{ marginTop: '10px', display: 'flex' }}>
+                <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => {
                     setDropdown(true);
                 }}>
-                    <span style={{display: 'flex'}}>{mode}<KeyboardArrowDownIcon style={{marginLeft:'10px'}}/></span>
+                    <span style={{ display: 'flex' }}>{mode}<KeyboardArrowDownIcon style={{ marginLeft: '10px' }} /></span>
                 </button>
-                <button style={{marginLeft:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={()=>{
+                <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={() => {
                     props.deleteBox(props.index);
                     console.log(props.boxList);
                 }}>
-                <DeleteOutlineIcon></DeleteOutlineIcon>
+                    <DeleteOutlineIcon></DeleteOutlineIcon>
                 </button>
             </div>
 
             {
-                dropdown ?  
-                <div className="dropdown is-active">
-                <div className="dropdown-menu" id="dropdown-menu3" role="menu">
-                <div className="dropdown-content">
-                    <a href="#" className="dropdown-item" onClick={(e)=>{
-                        setMode("number");
-                        setDropdown(false);
-                        props.changeType(props.index, mode);
-                        console.log(props.boxList);
-                    }}>
-                        number
-                    </a>
-                    <a href="#" className="dropdown-item" onClick={(e)=>{
-                        setMode("boolean");
-                        setDropdown(false);
-                        props.changeType(props.index, mode);
+                dropdown ?
+                    <div className="dropdown is-active">
+                        <div className="dropdown-menu" id="dropdown-menu3" role="menu">
+                            <div className="dropdown-content">
+                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                    setMode("number");
+                                    setDropdown(false);
+                                    props.changeType(props.index, mode);
+                                    console.log(props.boxList);
+                                }}>
+                                    number
+                                </a>
+                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                    setMode("boolean");
+                                    setDropdown(false);
+                                    props.changeType(props.index, mode);
 
-                        console.log(props.boxList);
-                    }}>
-                        boolean
-                    </a>
-                    <a href="#" className="dropdown-item" onClick={(e)=>{
-                        setMode("text");
-                        setDropdown(false);
-                        props.changeType(props.index, mode);
+                                    console.log(props.boxList);
+                                }}>
+                                    boolean
+                                </a>
+                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                    setMode("text");
+                                    setDropdown(false);
+                                    props.changeType(props.index, mode);
 
-                        console.log(props.boxList);
-                    }}>
-                        text
-                    </a>
-                    <a href="#" className="dropdown-item" onClick={(e)=>{
-                        setMode("multiple choice");
-                        setDropdown(false);  
-                        props.changeType(props.index, mode);
+                                    console.log(props.boxList);
+                                }}>
+                                    text
+                                </a>
+                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                    setMode("multiple choice");
+                                    setDropdown(false);
+                                    props.changeType(props.index, mode);
 
-                        console.log(props.boxList);
-                    }}>
-                        multiple choice
-                    </a>
-                </div>
-                </div>
-                </div>
-                : 
-                <></>
+                                    console.log(props.boxList);
+                                }}>
+                                    multiple choice
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    :
+                    <></>
             }
             {
                 mode == "multiple choice"
@@ -171,11 +173,11 @@ function QuestionBox (props) {
                         props.changeMulti(props.index, e.target.value, 2);
                         console.log(multi);
 
-                        // multi.splice(2, 1, e.target.value);
-                    }}></input>
-                </div>
-                :
-                <></>
+                            // multi.splice(2, 1, e.target.value);
+                        }}></input>
+                    </div>
+                    :
+                    <></>
             }
         </div>
     )
