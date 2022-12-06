@@ -8,26 +8,18 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
-    const [msg, setMsg] = useState('');
     const history = useHistory();
 
-    const Register = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:8080/register', {
-                name: name,
-                email: email,
-                password: password,
-                confPassword: confPassword
-            }).then((response) => {
-                console.log(response);
-            });
-            history.push("/");
-        } catch (error) {
-            if (error.response) {
-                setMsg(error.response.data.msg);
-            }
-        }
+    const Register = () => {
+        axios.post('http://localhost:8080/register', {
+            name: name,
+            email: email,
+            password: password,
+            confPassword: confPassword
+        }).then((response) => {
+            console.log(response);
+        });
+        history.push("/");
     }
 
     return (
@@ -37,7 +29,6 @@ const Register = () => {
                     <div className="columns is-centered">
                         <div className="column is-4-desktop">
                             <form onSubmit={Register} className="box">
-                                <p className="has-text-centered">{msg}</p>
                                 <div className="field mt-5">
                                     <label className="label">Name</label>
                                     <div className="controls">
