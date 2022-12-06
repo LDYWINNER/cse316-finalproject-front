@@ -15,21 +15,36 @@ const LogDay = () => {
         month: date.getMonth() + 1,
         day: date.getDate()
     };
-    // function refreshDate(){
-    //     $("#dateBox").load(window.location.href + " #dateBox");
-    // }
+
     let [selectedYear, setSelectedYear] = useState(date.getFullYear()); 
     let [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
     let [selectedDay, setSelectedDay] = useState(date.getDate());
     let [render, setRender] = useState(0);
-    // let [, setState] = useState();
-    // let forceRender = useCallback(() => setState({}), []); 
+
+    // const updateDate = async () => {
+    //     // setSelectedYear(selectedYear => select.getFullYear())
+    //     // setSelectedMonth(selectedMonth => select.getMonth() + 1)
+    //     // setSelectedDay(selectedDay => select.getDate())
+    //     selectedDate.year = select.getFullYear();
+    //     selectedDate.month = select.getMonth() + 1;
+    //     selectedDate.day = select.getDate();
+    // }
+
+    // useEffect(()=>{
+    //     updateDate();
+    // })
+
+
 
     return (
         <div>
             <div style={{display: 'flex', height: '80px'}}>
                 <button style={{margin:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={(e)=>{
                     select.setDate(select.getDate() - 1);
+                    // updateDate();
+                    console.log(select)
+                    // console.log(d)
+
                     // refreshDate();
                     // selectedDate = {
                     //     year: select.getFullYear(),
@@ -41,7 +56,10 @@ const LogDay = () => {
                     setSelectedMonth(select.getMonth() + 1)
                     setSelectedDay(select.getDate())
 
-                    console.log(select);
+                    // console.log(selectedYear);
+                    // console.log(selectedMonth);
+                    // console.log(selectedDay);
+
                 }}>
                     <KeyboardArrowLeftOutlinedIcon></KeyboardArrowLeftOutlinedIcon>
                 </button>
@@ -49,12 +67,21 @@ const LogDay = () => {
                     {/* {select.getFullYear()}/
                     {select.getMonth() + 1}/
                     {select.getDay()} */}
-                    {selectedMonth}/{selectedDay}/{selectedYear}
+                    {/* {selectedMonth}/{selectedDay}/{selectedYear} */}
                     {/* {selectedDate.month}/{selectedDate.day}/{selectedDate.year} */}
+                    <DateBox selectedYear={selectedYear} selectedMonth={selectedMonth} selectedDay={selectedDay}></DateBox>
+                    
+                    {/* {d.getMonth()+1}/{d.getDate()}/{d.getFullYear()} */}
+
+                    
                 </div>
                 <button style={{margin:"auto", backgroundColor: "transparent", border: 'transparent'}} onClick={(e)=>{
                     if (select < date) {
                         select.setDate(select.getDate() + 1);
+                        // updateDate();
+                        // setD(d.setDate(d.getDate() - 1));
+
+
                         // selectedDate = {
                         //     year: select.getFullYear(),
                         //     month: select.getMonth() + 1,
@@ -87,6 +114,24 @@ const LogDay = () => {
                 }}>Submit</button>
             </div>
         </div>
+    )
+}
+
+function DateBox(props) {
+
+
+    return(
+        <div id="dateBox" style={{margin:'auto', fontSize:'24px', fontWeight:'900'}}>
+        {/* {select.getFullYear()}/
+        {select.getMonth() + 1}/
+        {select.getDay()} */}
+        {/* {selectedMonth}/{selectedDay}/{selectedYear} */}
+        {props.selectedMonth}/{props.selectedDay}/{props.selectedYear}
+        
+        {/* {d.getMonth()+1}/{d.getDate()}/{d.getFullYear()} */}
+
+        
+    </div>
     )
 }
 

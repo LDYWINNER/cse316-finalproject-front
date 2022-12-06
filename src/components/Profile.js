@@ -27,11 +27,11 @@ const Profile = (props) => {
             method: "post",
             body: data
         })
-            .then(resp => resp.json())
-            .then(data => {
-                props.setImageUrl(data.url)
-            })
-            .catch(err => console.log(err))
+        .then(resp => resp.json())
+        .then(data => {
+            props.setImageUrl(data.url)
+        })
+        .catch(err => console.log(err))
     }
     const fileInput = useRef(null);
     const onChange = (e) => {
@@ -70,6 +70,7 @@ const Profile = (props) => {
     const updateUserData = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8080/update', {
+            newImage: props.imageUrl,
             newName: newName,
             newEmail: newEmail,
             newFirstAddress: newFirstAddress,
@@ -93,6 +94,7 @@ const Profile = (props) => {
                     <button className="button is-primary" style={{ margin: "auto", borderRadius: '12px', color: 'black' }} onClick={(e) => { fileInput.current.click() }}>Choose new image</button>
                     <button className='removeBtn' style={{ margin: "auto" }} onClick={(e) => {
                         props.setImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+                        props.setImageUrl("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
                     }}>Remove image</button>
                 </div>
             </div>
@@ -124,7 +126,8 @@ const Profile = (props) => {
                     <button className="button is-danger" style={{ margin: 'auto', width: '100px' }} onClick={(e) => {
                         if (isEmail(newEmail)) {
                             uploadImage();
-                            console.log(props.image);
+                            console.log(props.imageUrl);
+                            updateUserData();
 
                         }
                     }}>Save</button>
