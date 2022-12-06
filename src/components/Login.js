@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import "../css/app.css";
@@ -15,6 +15,12 @@ const Login = () => {
             await axios.post('http://localhost:8080/login', {
                 email: email,
                 password: password
+            }).then((response) => {
+                if (response.data.message) {
+                    setMsg(response.data.messsage);
+                } else {
+                    setMsg(response.data[0].username);
+                }
             });
             history.push("/dashboard");
         } catch (error) {
@@ -22,7 +28,15 @@ const Login = () => {
                 setMsg(error.response.data.msg);
             }
         }
-    }
+    };
+
+    useEffect(() => {
+        axios.get("http://localhost:8080").then((response) => {
+            if (response.data.loggedIn === true) {
+                setMsg(response.data.user[0].username);
+            }
+        })
+    }, []);
 
     return (
         <section className="hero has-background-grey-light is-fullheight is-fullwidth">
@@ -33,7 +47,7 @@ const Login = () => {
                             <form onSubmit={Auth} className="box">
                                 <p className="has-text-centered">{msg}</p>
                                 <div className="field mt-5">
-                                    <label className="label">Email or Username</label>
+                                    <label className="label">Email</label>
                                     <div className="controls">
                                         <input type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
                                     </div>

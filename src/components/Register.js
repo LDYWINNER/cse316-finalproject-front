@@ -14,11 +14,13 @@ const Register = () => {
     const Register = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/users', {
+            await axios.post('http://localhost:8080/register', {
                 name: name,
                 email: email,
                 password: password,
                 confPassword: confPassword
+            }).then((response) => {
+                console.log(response);
             });
             history.push("/");
         } catch (error) {
