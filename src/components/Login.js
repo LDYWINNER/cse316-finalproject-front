@@ -9,25 +9,18 @@ const Login = () => {
     const [msg, setMsg] = useState('');
     const history = useHistory();
 
-    const Auth = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:8080/login', {
-                email: email,
-                password: password
-            }).then((response) => {
-                if (response.data.message) {
-                    setMsg(response.data.messsage);
-                } else {
-                    setMsg(response.data[0].username);
-                }
-            });
-            history.push("/dashboard");
-        } catch (error) {
-            if (error.response) {
-                setMsg(error.response.data.msg);
+    const login = () => {
+        axios.post('http://localhost:8080/login', {
+            email: email,
+            password: password
+        }).then((response) => {
+            if (response.data.message) {
+                setMsg(response.data.messsage);
+            } else {
+                setMsg(response.data[0].username);
             }
-        }
+        });
+        history.push("/dashboard");
     };
 
     useEffect(() => {
@@ -44,7 +37,7 @@ const Login = () => {
                 <div className="container">
                     <div className="columns is-centered">
                         <div className="column is-4-desktop">
-                            <form onSubmit={Auth} className="box">
+                            <form className="box">
                                 <p className="has-text-centered">{msg}</p>
                                 <div className="field mt-5">
                                     <label className="label">Email</label>
@@ -59,7 +52,7 @@ const Login = () => {
                                     </div>
                                 </div>
                                 <div className="field mt-5">
-                                    <button className="button is-success is-fullwidth">Login</button>
+                                    <button className="button is-success is-fullwidth" onClick={login}>Login</button>
                                 </div>
                                 <div className="field mt-5">
                                     <button className="button is-success is-fullwidth" onClick={() => history.push("/register")}>Go Register</button>
