@@ -30,7 +30,6 @@ const EditQuestions = () => {
         copy[index].multi = multi;
         setBoxList(copy);
     }
-    
 
     return (
         <div>
@@ -56,7 +55,6 @@ const EditQuestions = () => {
                             
                     )
                 })
-                
             }
             <button className="button is-danger" style={{margin: '20px', width: '100px'}} onClick={(e)=>{
                 // 123
@@ -104,7 +102,6 @@ function QuestionBox (props) {
                         setDropdown(false);
                         props.changeType(props.index, mode);
                         console.log(props.boxList);
-
                     }}>
                         number
                     </a>
@@ -114,7 +111,6 @@ function QuestionBox (props) {
                         props.changeType(props.index, mode);
 
                         console.log(props.boxList);
-
                     }}>
                         boolean
                     </a>
@@ -124,7 +120,6 @@ function QuestionBox (props) {
                         props.changeType(props.index, mode);
 
                         console.log(props.boxList);
-
                     }}>
                         text
                     </a>
@@ -134,7 +129,6 @@ function QuestionBox (props) {
                         props.changeType(props.index, mode);
 
                         console.log(props.boxList);
-
                     }}>
                         multiple choice
                     </a>
