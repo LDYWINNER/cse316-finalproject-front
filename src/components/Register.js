@@ -11,6 +11,14 @@ const Register = () => {
     const history = useHistory();
 
     const Register = () => {
+        if (!isEmail(email)){
+            alert("You should use valid email")
+            return
+        }
+        if (!isValidPassword(password)){
+            alert("The password must have at least 8 characters (including at least 1 number and 1 lower and 1 uppercase letter)");
+            return
+        }
         axios.post('http://localhost:8080/register', {
             name: name,
             email: email,
@@ -21,6 +29,17 @@ const Register = () => {
         });
         history.push("/");
     }
+    const isEmail = (email) => {
+        const emailRegex =
+            /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
+        return emailRegex.test(email);
+    };
+    const isValidPassword = (password) => {
+        const passwordRegex = 
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
+        return passwordRegex.test(password)
+    };
 
     return (
         <section className="hero has-background-grey-light is-fullheight is-fullwidth">

@@ -13,6 +13,7 @@ const Profile = (props) => {
     //     address1: "",
     //     address2: ""
     // }
+    const [newImage, setNewImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     const [newName, setNewName] = useState("");
     const [newEmail, setNewEmail] = useState("");
     const [newFirstAddress, setNewFirstAddress] = useState("");
@@ -30,6 +31,7 @@ const Profile = (props) => {
         .then(resp => resp.json())
         .then(data => {
             props.setImageUrl(data.url)
+            setNewImage(data.url)
         })
         .catch(err => console.log(err))
     }
@@ -37,14 +39,17 @@ const Profile = (props) => {
     const onChange = (e) => {
         if (e.target.files[0]) {
             props.setImage(e.target.files[0])
+            setNewImage(e.target.value[0]);
         } else {
             props.setImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+            setNewImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
             return
         }
         const reader = new FileReader();
         reader.onload = () => {
             if (reader.readyState === 2) {
                 props.setImage(reader.result)
+                setNewImage(reader.result)
             }
         }
         reader.readAsDataURL(e.target.files[0])
