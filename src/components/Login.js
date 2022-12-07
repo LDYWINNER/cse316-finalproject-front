@@ -9,7 +9,8 @@ const Login = () => {
     const [msg, setMsg] = useState('');
     const history = useHistory();
 
-    const login = () => {
+    const login = (e) => {
+        e.preventDefault();
         axios.post('http://localhost:8080/login', {
             email: email,
             password: password
@@ -17,10 +18,10 @@ const Login = () => {
             if (response.data.message) {
                 setMsg(response.data.messsage);
             } else {
+                history.push("/dashboard");
                 setMsg(response.data[0].username);
             }
         });
-        history.push("/dashboard");
     };
 
     useEffect(() => {
