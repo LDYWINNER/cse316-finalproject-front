@@ -51,9 +51,18 @@ const LogDay = () => {
             let currentDay = selectedDay - 1;
             setSelectedDay(selectedDay - 1);
             setDate2({ ... date2, day:currentDay});
-        } else {
+        }  else {
             let currentDay;
-            let currentMonth = selectedMonth - 1;
+            let currentMonth;
+            let currentYear = selectedYear;
+            if (selectedMonth != 1) {
+                currentMonth = selectedMonth - 1;
+            } else if (selectedMonth == 1) {
+                currentMonth = 12
+                currentYear = selectedYear - 1;
+                
+                setSelectedYear(currentYear);
+            }
             setSelectedMonth(currentMonth);
             if (currentMonth == 1 || currentMonth == 3 || currentMonth == 5 || currentMonth == 7 || currentMonth == 8 || currentMonth == 10 || currentMonth == 12){
                 currentDay = 31
@@ -63,8 +72,9 @@ const LogDay = () => {
                 currentDay = 30
             }
             setSelectedDay(currentDay);
-            setDate2({ ... date2, month:currentMonth, day:currentDay});
+            setDate2({ ... date2, month:currentMonth, day:currentDay, year:currentYear});
         }
+        console.log(selectedMonth)
 
 
 
@@ -74,8 +84,15 @@ const LogDay = () => {
         // select.setDate(select.getDate() + 1);
 
         const thirtyOne = [1, 3, 5, 7, 8, 10, 12]
-
-        if (thirtyOne.includes(selectedMonth) && selectedDay == 31){
+        if (selectedMonth == 12 && selectedDay == 31){
+            let currentYear = selectedYear + 1;
+            let currentMonth = 1;
+            let currentDay = 1;
+            setSelectedYear(currentYear);
+            setSelectedMonth(currentMonth);
+            setSelectedDay(currentDay);
+            setDate2({... date2, day:currentDay, month:currentMonth, year:currentYear});
+        } else if (thirtyOne.includes(selectedMonth) && selectedDay == 31){
             let currentMonth = selectedMonth + 1;
             let currentDay = 1;
             setSelectedMonth(currentMonth);
