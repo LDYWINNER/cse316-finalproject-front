@@ -9,7 +9,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const EditQuestions = () => {
-    let [boxList, setBoxList] = useState([]);
+    const [boxList, setBoxList] = useState([]);
     let deleteBox = (index) => {
         let copy = [...boxList];
         copy.splice(index, 1);
@@ -39,16 +39,30 @@ const EditQuestions = () => {
         });
     };
 
+    const handleClick = async () => {
+        let tmp = [...boxList];
+        let box = {boxType: "number", text: "", multi: []}
+        tmp.splice(0, 0, box);
+        setBoxList(tmp);
+        // console.log(boxList);
+    }
+
+
+    useEffect(()=>{
+        console.log(boxList)
+
+    }, [boxList])
+
     return (
         <div>
             <div style={{ margin: "20px", backgroundColor: "transparent", display: "flex" }}>
                 <strong>Edit Questions</strong>
-                <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={async () => {
-                    let tmp = [...boxList];
-                    let box = {boxType: "number", text: "", multi: []}
-                    tmp.splice(0, 0, box);
-                    setBoxList(tmp);
-                    console.log(boxList);
+                <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={() => {
+                    // let tmp = [...boxList];
+                    // let box = {boxType: "number", text: "", multi: []}
+                    // tmp.splice(0, 0, box);
+                    // setBoxList(tmp);
+                    handleClick()
                 }}>
 
                     <AddCircleOutlineIcon sx={{ color: "black" }}></AddCircleOutlineIcon>
@@ -56,7 +70,7 @@ const EditQuestions = () => {
             </div>
             {
                 boxList.map(function (a, i) {
-                    console.log(a)
+                    // console.log(a)
                     return (
                         <div key={i}><QuestionBox boxList={boxList} changeType={changeType} changeText={changeText} deleteBox={deleteBox} changeMulti={changeMulti} box={a} index={i}></QuestionBox></div>
 
@@ -75,8 +89,8 @@ const EditQuestions = () => {
 
 function QuestionBox(props) {
     // let [modeList] = ["number", "boolean", "text", "multiple choice"];
-    let [mode, setMode] = useState(props.box.boxType);
-    let [dropdown, setDropdown] = useState(false);
+    const [mode, setMode] = useState(props.box.boxType);
+    const [dropdown, setDropdown] = useState(false);
     let multi = ['', '', ''];
 
     return (
@@ -87,13 +101,17 @@ function QuestionBox(props) {
 
             <div className="dropdown-trigger" style={{ marginTop: '10px', display: 'flex' }}>
                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => {
-                    setDropdown(true);
+                    if (dropdown) {
+                        setDropdown(false);
+                    } else {
+                        setDropdown(true);
+                    }
                 }}>
                     <span style={{ display: 'flex' }}>{mode}<KeyboardArrowDownIcon style={{ marginLeft: '10px' }} /></span>
                 </button>
                 <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={() => {
                     props.deleteBox(props.index);
-                    console.log(props.boxList);
+                    // console.log(props.boxList);
                 }}>
                     <DeleteOutlineIcon></DeleteOutlineIcon>
                 </button>
