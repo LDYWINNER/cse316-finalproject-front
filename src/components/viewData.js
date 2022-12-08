@@ -27,6 +27,11 @@ const ViewData = () => {
         )
     };
 
+    const practiceData = [
+        ["Question", "True", "False"],
+        ["2014", 1000, 400],
+    ];
+
     const BarChart = ({ data }) => {
         return (
             <Chart
@@ -70,9 +75,7 @@ const ViewData = () => {
         for (let j = 0; j < answerData.length; j++) {
             answerData[j].answers = JSON.parse(answerData[j].answers);
         }
-        console.log(answerData);
         //initialization
-        console.log(tempQuestionsData);
         for (let a = 0; a < answerData[0].answers.length; a++) {
             if (tempQuestionsData[a].box_type === "boolean") {
                 chartData[tempQuestionsData[a].text] = [0, 0];
@@ -108,53 +111,47 @@ const ViewData = () => {
                 }
             }
         }
-        console.log(chartData);
         setChartResultData(chartData);
-        console.log(chartResultData);
     };
 
     useEffect(() => {
         getChartData();
-        console.log('dy');
-        console.log(chartData);
         setChartResultData(chartData);
     }, [chartData]);
 
     return (
         <div>
             <h2>Summary of responses organized by Question</h2>
-            {console.log('im here')}
-            {console.log(chartResultData)}
             {
                 questionsData !== {} && chartResultData !== {} && questionsData.map((obj, i) => {
                     if (questionsData[i].box_type === "number") {
                         //line graph
                         return (
-                            <LineChart />
+                            <LineChart data={practiceData} />
                         );
                     } else if (questionsData[i].box_type === "boolean") {
                         //bar graph
                         return (
-                            <BarChart data={booleanInitialData.push([obj.text, chartData[questionsData[i].text][0], chartData[questionsData[i].text][1]])} />
+                            // <BarChart data={booleanInitialData.push([obj.text, chartData[questionsData[i].text][0], chartData[questionsData[i].text][1]])} />
+                            <BarChart data={practiceData} />
                         );
                     } else if (questionsData[i].box_type === "multiple choice") {
                         //bar graph
                         return (
-                            <BarChart />
+                            <BarChart data={practiceData} />
                         );
                     } else {
                         //text type --> show all the answers
                         return (
                             <>
                                 <h2>{questionsData[i].text}</h2>
-                                {console.log(chartResultData[questionsData[i].text])}
-                                {
+                                {/* {
                                     chartResultData !== undefined && chartResultData[questionsData[i].text].map((obj, i) => {
                                         return (
                                             <h4>{obj}</h4>
                                         )
                                     })
-                                }
+                                } */}
                             </>
                         );
                     }
