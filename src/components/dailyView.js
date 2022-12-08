@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../css/app.css";
+import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import { SettingsInputAntennaTwoTone } from '@mui/icons-material';
 
-const Dashboard = () => {
+const DailyView = () => {
     const [answers, setAnswers] = useState([]);
-
+    const [content, setContent] = useState();
+    let a = []
     const getAnswers = async () => {
         const temp = await axios.get('http://localhost:8080/answers');
         console.log(temp);
+        a = temp.data;
         setAnswers(temp.data);
     };
 
@@ -18,15 +23,308 @@ const Dashboard = () => {
 
     const practiceData = [[8, 12, 2022, [12, "hello", true, "a"]]];
 
+
+
+    let date = new Date();
+    let select = new Date();
+    // let questions = [];
+    const [questions, setQuestions] = useState([]);
+    // const [answers, setAnswers] = useState([]);
+    let tmp = [];
+    
+
+    const [selectedYear, setSelectedYear] = useState(date.getFullYear());
+    const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
+    const [selectedDay, setSelectedDay] = useState(date.getDate());
+
+    const [date2, setDate2] = useState({
+        year: selectedYear,
+        month: selectedMonth,
+        day: selectedDay
+    });
+
+    const getData = async () => {
+        const tempQuestions = await axios.get('http://localhost:8080/questions');
+        // const questions = tempQuestions.data;
+        let copy = [...questions];
+        // copy.push(tempQuestions.data);
+        console.log(tempQuestions);
+        tmp = tempQuestions.data;
+
+        for(let i = 0; i < tmp.length; i++) {
+            if (tmp[i].multi !== ''){
+                tmp[i].multi = JSON.parse(tmp[i].multi);
+            }
+        }
+        setQuestions(tmp);
+
+            console.log(questions);
+            console.log(tmp);
+    }
+
+    // getData();
+    // setQuestions(tmp);
+
+    useEffect(()=>{
+        getData();
+        setQuestions(tmp);
+        console.log(questions);
+    }, [])
+
+    const saveData = (e) => {
+        // e.preventDefault();
+        axios.post('http://localhost:8080/answers', {
+            month: selectedMonth,
+            day: selectedDay,
+            year: selectedYear,
+            answers: JSON.stringify(answers)
+        }).then((response) => {
+            console.log(response);
+        });
+    };
+    const handleClick = () => {
+        // select.setDate(select.getDate() - 1)
+        //Put the algorithm here
+        if (selectedDay != 1) {
+            let currentDay = selectedDay - 1;
+            setSelectedDay(selectedDay - 1);
+            setDate2({ ...date2, day: currentDay });
+        } else {
+            let currentDay;
+            let currentMonth;
+            let currentYear = selectedYear;
+            if (selectedMonth != 1) {
+                currentMonth = selectedMonth - 1;
+            } else if (selectedMonth == 1) {
+                currentMonth = 12
+                currentYear = selectedYear - 1;
+
+                setSelectedYear(currentYear);
+            }
+            setSelectedMonth(currentMonth);
+            if (currentMonth == 1 || currentMonth == 3 || currentMonth == 5 || currentMonth == 7 || currentMonth == 8 || currentMonth == 10 || currentMonth == 12) {
+                currentDay = 31
+            } else if (currentMonth == 2) {
+                currentDay = 28
+            } else {
+                currentDay = 30
+            }
+            setSelectedDay(currentDay);
+            setDate2({ ...date2, month: currentMonth, day: currentDay, year: currentYear });
+        }
+        console.log(selectedMonth)
+
+    }
+    const handleClick2 = () => {
+        //Put the algorithm here
+        // select.setDate(select.getDate() + 1);
+
+        const thirtyOne = [1, 3, 5, 7, 8, 10, 12]
+        if (selectedMonth == 12 && selectedDay == 31) {
+            let currentYear = selectedYear + 1;
+            let currentMonth = 1;
+            let currentDay = 1;
+            setSelectedYear(currentYear);
+            setSelectedMonth(currentMonth);
+            setSelectedDay(currentDay);
+            setDate2({ ...date2, day: currentDay, month: currentMonth, year: currentYear });
+        } else if (thirtyOne.includes(selectedMonth) && selectedDay == 31) {
+            let currentMonth = selectedMonth + 1;
+            let currentDay = 1;
+            setSelectedMonth(currentMonth);
+            setSelectedDay(1);
+            setDate2({ ...date2, day: currentDay, month: currentMonth });
+        } else if (selectedMonth == 2 && selectedDay == 28) {
+            let currentMonth = selectedMonth + 1;
+            let currentDay = 1;
+            setSelectedMonth(currentMonth);
+            setSelectedDay(1);
+            setDate2({ ...date2, day: currentDay, month: currentMonth });
+        } else if (!thirtyOne.includes(selectedMonth) && selectedDay == 30) {
+            let currentMonth = selectedMonth + 1;
+            let currentDay = 1;
+            setSelectedMonth(currentMonth);
+            setSelectedDay(1);
+            setDate2({ ...date2, day: currentDay, month: currentMonth });
+        } else {
+            let currentDay = selectedDay + 1;
+            setSelectedDay(currentDay);
+            setDate2({ ...date2, day: currentDay });
+        }
+    }
+    const dateCheck = () => {
+        let today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        let current = new Date(date2.year, date2.month - 1, date2.day);
+        return current < today
+    }
+
+    useEffect(() => {
+        if (date2) {
+            setDate2(
+                {
+                    year: selectedYear,
+                    month: selectedMonth,
+                    day: selectedDay
+                }
+            )
+        }
+
+    }, [])
+
+    for (let i = 0; a.length; i++){
+        if (a[i].year == selectedYear && a[i].month == selectedMonth && a[i].day == selectedDay){
+            setContent(a[i].answers);
+            console.log(content)
+        }      
+    }
     return (
+
+
+
+
         <div>
-            <h2>Responses organized by the day of the response</h2>
-            <h4>Same with log data page</h4>
-            <Link to="/viewData" style={{ textDecoration: "none" }}>
-                <button>View responses per question</button>
-            </Link>
+            {/* {
+                a.map((data, i) => {
+                    if (data.year == selectedYear && data.month == selectedMonth && data.day == selectedDay){
+                        setContent(data.answers);
+                        console.log(content)
+                    }
+
+
+                    // return(
+
+                    // )
+                })
+            } */}
+            <div style={{ display: 'flex', height: '80px' }}>
+                <button style={{ margin: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={(e) =>
+                    handleClick()
+                }>
+                    <KeyboardArrowLeftOutlinedIcon></KeyboardArrowLeftOutlinedIcon>
+                </button>
+                <div id="dateBox" style={{ margin: 'auto', fontSize: '24px', fontWeight: '900' }}>
+                    {date2 ? date2.month : ""}/
+                    {date2 ? date2.day : ""}/
+                    {date2 ? date2.year : ""}
+
+
+                </div>
+                <button style={{ margin: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={(e) => {
+                    if (dateCheck()) {
+                        handleClick2();
+                    }
+
+                }}>
+                    <KeyboardArrowRightOutlinedIcon></KeyboardArrowRightOutlinedIcon>
+                </button>
+
+
+            </div>
+            {
+            questions.map((obj, i) => {
+
+                return(
+                    obj.box_type == 'number'
+                    ?
+                    <NumberBox key={i} content={content} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></NumberBox>
+                    :
+                    obj.box_type == 'boolean'
+                    ?
+                    <BooleanBox key={i} content={content} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></BooleanBox>
+                    :
+                    obj.box_type == 'text'
+                    ?
+                    <TextBox key={i} content={content} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></TextBox>
+                    :
+                    <MultiBox key={i} content={content} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></MultiBox>
+                    )   
+                    })
+                }
         </div>
     )
 }
 
-export default Dashboard;
+
+function NumberBox(props) {
+    // const c = props.content[props.index];
+    console.log(props.content)
+
+    return (
+        <div className="box" style={{ margin: "10px" }}>
+            <div>{props.obj.text}</div>
+            <input className='input' type='text' style={{ width: '200px' }} disabled onChange={(e)=>{
+
+            }}></input>
+        </div>
+    )
+}
+
+function BooleanBox(props) {
+
+    return (
+        <div className="box" style={{ margin: "10px" }}>
+            <div>{props.obj.text}</div>
+            <div style={{ display: 'flex' }}>
+                <input type='radio' value='True' name='boolean' style={{ marginRight: '5px' }} disabled onChange={(e) => {
+
+                }} ></input> True
+                <div style={{ marginRight: '50px' }}></div>
+                <input type='radio' value='False' name='boolean' style={{ marginRight: '5px' }} disabled onChange={(e) => {
+
+                }}></input> False
+            </div>
+
+        </div>
+    )
+}
+
+function TextBox(props) {
+
+    return (
+        <div className="box" style={{ margin: "10px" }}>
+            <div>{props.obj.text}</div>
+            <input className='input' type='text' defaultValue={props.content[props.index]} disabled onChange={(e)=>{
+
+            }}></input>
+        </div>
+    )
+}
+
+function MultiBox(props) {
+
+    return (
+        <div className="box" style={{ margin: "10px" }}>
+            <div>{props.obj.text}</div>
+            <div style={{ display: 'flex', margin: '10px' }}>
+                <input type='radio' value='?' name='multi' disabled onChange={(e) => {
+
+
+                }}></input>
+                <div>{props.obj.multi[0]}</div>
+            </div>
+
+            <div style={{ display: 'flex', margin: '10px'  }}>
+                <input type='radio' value='?' name='multi' disabled onChange={(e) => {
+
+
+                }}></input>
+                <div>{props.obj.multi[1]}</div>
+
+            </div>
+
+            <div style={{ display: 'flex', margin: '10px'  }}>
+                <input type='radio' value='?' name='multi' disabled onChange={(e) => {
+
+
+                }}></input>
+                <div>{props.obj.multi[2]}</div>
+
+
+            </div>
+
+
+        </div>
+    )
+}
+
+export default DailyView;
