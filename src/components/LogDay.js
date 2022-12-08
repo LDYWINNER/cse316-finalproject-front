@@ -14,7 +14,7 @@ const LogDay = () => {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState([]);
     let tmp = [];
-    
+
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
@@ -31,27 +31,22 @@ const LogDay = () => {
         // const questions = tempQuestions.data;
         let copy = [...questions];
         // copy.push(tempQuestions.data);
-        console.log(tempQuestions);
         tmp = tempQuestions.data;
 
-        for(let i = 0; i < tmp.length; i++) {
-            if (tmp[i].multi !== ''){
+        for (let i = 0; i < tmp.length; i++) {
+            if (tmp[i].multi !== '') {
                 tmp[i].multi = JSON.parse(tmp[i].multi);
             }
         }
         setQuestions(tmp);
-
-            console.log(questions);
-            console.log(tmp);
     }
 
     // getData();
     // setQuestions(tmp);
 
-    useEffect(()=>{
+    useEffect(() => {
         getData();
         setQuestions(tmp);
-        console.log(questions);
     }, [])
 
     const saveData = (e) => {
@@ -95,7 +90,6 @@ const LogDay = () => {
             setSelectedDay(currentDay);
             setDate2({ ...date2, month: currentMonth, day: currentDay, year: currentYear });
         }
-        console.log(selectedMonth)
 
 
 
@@ -188,20 +182,20 @@ const LogDay = () => {
 
                 questions.map((obj, i) => {
 
-                    return(
+                    return (
                         obj.box_type == 'number'
-                        ?
-                        <NumberBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></NumberBox>
-                        :
-                        obj.box_type == 'boolean'
-                        ?
-                        <BooleanBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></BooleanBox>
-                        :
-                        obj.box_type == 'text'
-                        ?
-                        <TextBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></TextBox>
-                        :
-                        <MultiBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></MultiBox>
+                            ?
+                            <NumberBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></NumberBox>
+                            :
+                            obj.box_type == 'boolean'
+                                ?
+                                <BooleanBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></BooleanBox>
+                                :
+                                obj.box_type == 'text'
+                                    ?
+                                    <TextBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></TextBox>
+                                    :
+                                    <MultiBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></MultiBox>
                     )
 
                 })
@@ -209,7 +203,6 @@ const LogDay = () => {
             <div>
                 <button className="button is-danger" style={{ margin: '10px', width: '100px' }} onClick={(e) => {
                     saveData();
-                    console.log(answers);
                 }}>Submit</button>
             </div>
         </div>
@@ -222,7 +215,7 @@ function NumberBox(props) {
     return (
         <div className="box" style={{ margin: "10px" }}>
             <div>{props.obj.text}</div>
-            <input className='input' type='text' style={{ width: '200px' }} defaultValue={props.answers[props.index]} onChange={(e)=>{
+            <input className='input' type='text' style={{ width: '200px' }} defaultValue={props.answers[props.index]} onChange={(e) => {
 
                 let tmp = [...props.answers];
                 let tmpText = e.value;
@@ -265,7 +258,7 @@ function TextBox(props) {
     return (
         <div className="box" style={{ margin: "10px" }}>
             <div>{props.obj.text}</div>
-            <input className='input' type='text' onChange={(e)=>{
+            <input className='input' type='text' onChange={(e) => {
                 let tmp = [...props.answers];
                 let tmpText = e.target.value;
                 tmp[props.index] = tmpText
@@ -286,13 +279,11 @@ function MultiBox(props) {
                     let tmp = [...props.answers];
                     tmp[props.index] = props.obj.multi[0];
                     props.setAnswers(tmp);
-                    console.log(props.obj)
-
                 }}></input>
                 <div>{props.obj.multi[0]}</div>
             </div>
 
-            <div style={{ display: 'flex', margin: '10px'  }}>
+            <div style={{ display: 'flex', margin: '10px' }}>
                 <input type='radio' value='?' name='multi' onChange={(e) => {
                     let tmp = [...props.answers];
                     tmp[props.index] = props.obj.multi[1];
@@ -303,7 +294,7 @@ function MultiBox(props) {
 
             </div>
 
-            <div style={{ display: 'flex', margin: '10px'  }}>
+            <div style={{ display: 'flex', margin: '10px' }}>
                 <input type='radio' value='?' name='multi' onChange={(e) => {
                     let tmp = [...props.answers];
                     tmp[props.index] = props.obj.multi[2];
