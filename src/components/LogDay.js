@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import "../css/app.css";
-import { height } from '@mui/system';
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
@@ -21,14 +20,11 @@ const LogDay = () => {
         day: selectedDay
     });
 
-
-
     const getData = async () => {
         const tempQuestionData = await axios.get('http://localhost:8080/questions');
         const questions = JSON.parse(tempQuestionData).data;
         console.log(questions);
     }
-
 
     const saveData = (e) => {
         e.preventDefault();
