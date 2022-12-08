@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
@@ -25,14 +26,14 @@ const EditQuestions = () => {
 
     const handleClick = async () => {
         let tmp = [...boxList];
-        let box = {boxType: "number", text: "", multi: ['','',''], id: id}
+        let box = { boxType: "number", text: "", multi: ['','',''] , id: id}
         setId(id => id + 1);
         tmp.unshift(box);
         setBoxList(tmp);
     }
 
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(boxList)
 
     }, [boxList])
