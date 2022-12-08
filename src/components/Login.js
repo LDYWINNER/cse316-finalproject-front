@@ -18,7 +18,7 @@ const Login = () => {
             if (response.data.message) {
                 setMsg(response.data.messsage);
             } else {
-                history.push("/dashboard");
+                history.push("/logDay");
                 setMsg(response.data[0].username);
             }
         });
