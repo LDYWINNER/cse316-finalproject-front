@@ -12,7 +12,7 @@ const LogDay = () => {
     // let questions = [];
     const [questions, setQuestions] = useState([]);
 
-    
+
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
@@ -27,15 +27,15 @@ const LogDay = () => {
     const getData = () => {
         const tempQuestions = axios.get('http://localhost:8080/questions');
         const questions = tempQuestions.data;
-        for(let i = 0; i < questions.length; i++) {
-            questions[i].multi = JSON.parse(questions[i].multi);
-        }
-        console.log(typeof(questions[0].multi));
+        // for(let i = 0; i < questions.length; i++) {
+        //     questions[i].multi = JSON.parse(questions[i].multi);
+        // }
+        // console.log(typeof(questions[0].multi));
         return questions;
     }
 
 
-    useEffect(()=>{
+    useEffect(() => {
         let tmp = getData();
         setQuestions(tmp);
     }, [])
