@@ -9,6 +9,10 @@ import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRig
 const LogDay = () => {
     let date = new Date();
     let select = new Date();
+    // let questions = [];
+    const [questions, setQuestions] = useState([]);
+
+    
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(date.getMonth() + 1);
@@ -20,11 +24,21 @@ const LogDay = () => {
         day: selectedDay
     });
 
-    const getData = async () => {
-        const tempQuestionData = await axios.get('http://localhost:8080/questions');
-        const questions = JSON.parse(tempQuestionData).data;
-        console.log(questions);
+    const getData = () => {
+        const tempQuestions = axios.get('http://localhost:8080/questions');
+        const questions = tempQuestions.data;
+        for(let i = 0; i < questions.length; i++) {
+            questions[i].multi = JSON.parse(questions[i].multi);
+        }
+        console.log(typeof(questions[0].multi));
+        return questions;
     }
+
+
+    useEffect(()=>{
+        let tmp = getData();
+        setQuestions(tmp);
+    }, [])
 
     const saveData = (e) => {
         e.preventDefault();
@@ -155,10 +169,12 @@ const LogDay = () => {
 
 
             </div>
-            <NumberBox></NumberBox>
-            <BooleanBox></BooleanBox>
-            <TextBox></TextBox>
-            <MultiBox></MultiBox>
+            {/* {
+                questions.map((obj, i) => {
+
+
+                })
+            } */}
             <div>
                 <button className="button is-danger" style={{ margin: '10px', width: '100px' }} onClick={(e) => {
 
@@ -169,7 +185,7 @@ const LogDay = () => {
 }
 
 
-function NumberBox() {
+function NumberBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
@@ -179,7 +195,7 @@ function NumberBox() {
     )
 }
 
-function BooleanBox() {
+function BooleanBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
@@ -198,7 +214,7 @@ function BooleanBox() {
     )
 }
 
-function TextBox() {
+function TextBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
@@ -208,7 +224,7 @@ function TextBox() {
     )
 }
 
-function MultiBox() {
+function MultiBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>

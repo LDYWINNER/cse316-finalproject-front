@@ -16,8 +16,8 @@ const EditQuestions = () => {
     const [boxList, setBoxList] = useState([]);
     const [id, setId] = useState(0);
 
-    const updateQuestions = () => {
-        axios.post('http://localhost:8080/editQuestions', {
+    const updateQuestions = async () => {
+        await axios.post('http://localhost:8080/editQuestions', {
             boxList: boxList
         }).then((response) => {
             console.log(response);
