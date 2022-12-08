@@ -8,7 +8,9 @@ const ViewData = () => {
     const [answers, setAnswers] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [questionsData, setQuestionsData] = useState([]);
-    let [chartResultData, setChartResultData] = useState({});
+    let [chartResultData, setChartResultData] = useState({
+
+    });
     let chartData = {};
 
     const booleanInitialData = [
@@ -49,7 +51,7 @@ const ViewData = () => {
         )
     };
 
-    const getChartData = useCallback(async () => {
+    const getChartData = async () => {
         const tempQuestions = await axios.get('http://localhost:8080/questions');
         const tempQuestionsData = tempQuestions.data;
         setQuestionsData(tempQuestionsData);
@@ -82,38 +84,41 @@ const ViewData = () => {
                 chartData[tempQuestionsData[a].text] = [];
             }
         }
+        setChartResultData(chartData);
         //Storing real data
         for (let d = 0; d < answerData.length; d++) {
             for (let k = 0; k < answerData[0].answers.length; k++) {
                 if (tempQuestionsData[k].box_type === "boolean") {
                     if (answerData[d].answers[k] === "true") {
                         chartData[tempQuestionsData[k].text][0] += 1;
-                        console.log(chartData);
+                        setChartResultData(chartData);
                     } else {
                         chartData[tempQuestionsData[k].text][1] += 1;
-                        console.log(chartData);
+                        setChartResultData(chartData);
                     }
                 } else if (tempQuestionsData[k].box_type === "text") {
                     chartData[tempQuestionsData[k].text].push(answerData[d].answers[k]);
-                    console.log(chartData);
+                    setChartResultData(chartData);
                 } else if (tempQuestionsData[k].box_type === "number") {
                     chartData[tempQuestionsData[k].text].push(answerData[d].answers[k]);
-                    console.log(chartData);
+                    setChartResultData(chartData);
                 } else {
                     chartData[tempQuestionsData[k].text].push(answerData[d].answers[k]);
-                    console.log(chartData);
+                    setChartResultData(chartData);
                 }
             }
         }
         console.log(chartData);
-
-    }, []);
+        setChartResultData(chartData);
+        console.log(chartResultData);
+    };
 
     useEffect(() => {
         getChartData();
+        console.log('dy');
         console.log(chartData);
         setChartResultData(chartData);
-    }, []);
+    }, [chartData]);
 
     return (
         <div>
@@ -121,7 +126,7 @@ const ViewData = () => {
             {console.log('im here')}
             {console.log(chartResultData)}
             {
-                questionsData.map((obj, i) => {
+                questionsData !== {} && chartResultData !== {} && questionsData.map((obj, i) => {
                     if (questionsData[i].box_type === "number") {
                         //line graph
                         return (
@@ -144,7 +149,7 @@ const ViewData = () => {
                                 <h2>{questionsData[i].text}</h2>
                                 {console.log(chartResultData[questionsData[i].text])}
                                 {
-                                    chartResultData[questionsData[i].text].map((obj, i) => {
+                                    chartResultData !== undefined && chartResultData[questionsData[i].text].map((obj, i) => {
                                         return (
                                             <h4>{obj}</h4>
                                         )
