@@ -35,7 +35,9 @@ const LogDay = () => {
         tmp = tempQuestions.data;
 
         for(let i = 0; i < tmp.length; i++) {
-            tmp[i].multi = JSON.parse(tmp[i].multi);
+            if (tmp[i].multi !== ''){
+                tmp[i].multi = JSON.parse(tmp[i].multi);
+            }
         }
         setQuestions(tmp);
 
