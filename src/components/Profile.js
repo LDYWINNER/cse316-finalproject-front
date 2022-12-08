@@ -28,12 +28,12 @@ const Profile = (props) => {
             method: "post",
             body: data
         })
-        .then(resp => resp.json())
-        .then(data => {
-            props.setImageUrl(data.url)
-            setNewImage(data.url)
-        })
-        .catch(err => console.log(err))
+            .then(resp => resp.json())
+            .then(data => {
+                props.setImageUrl(data.url)
+                setNewImage(data.url)
+            })
+            .catch(err => console.log(err))
     }
     const fileInput = useRef(null);
     const onChange = (e) => {
@@ -131,7 +131,6 @@ const Profile = (props) => {
                     <button className="button is-danger" style={{ margin: 'auto', width: '100px' }} onClick={(e) => {
                         if (isEmail(newEmail)) {
                             uploadImage();
-                            console.log(props.imageUrl);
                             updateUserData();
 
                         }

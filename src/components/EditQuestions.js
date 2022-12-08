@@ -27,7 +27,7 @@ const EditQuestions = (props) => {
 
     const handleClick = () => {
         let tmp = [...boxList];
-        let box = {boxType: "number", text: "", multi: ['','',''] , id: id}
+        let box = { boxType: "number", text: "", multi: ['', '', ''], id: id }
         setId(id => id + 1);
         tmp.unshift(box);
         setBoxList(tmp);
@@ -60,128 +60,126 @@ const EditQuestions = (props) => {
                                 let tmp = [...boxList];
                                 let tmpId = a.id
                                 let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                tmp[findIndex] = {...tmp[findIndex], text: e.target.value};
+                                tmp[findIndex] = { ...tmp[findIndex], text: e.target.value };
                                 setBoxList(tmp);
-                                }}>
+                            }}>
                             </input>
 
                             <div style={{ marginTop: '10px', display: 'flex' }}>
-                                        <div className="dropdown is-hoverable">
-                                        <div className="dropdown-trigger">
-                                            <button className="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                <div className="dropdown is-hoverable">
+                                    <div className="dropdown-trigger">
+                                        <button className="button" aria-haspopup="true" aria-controls="dropdown-menu4">
                                             <span>{a.boxType}</span>
 
-                                            </button>
-                                        </div>
-                                        <div className="dropdown-menu" id="dropdown-menu4" role="menu">
-                                            <div className="dropdown-content">
+                                        </button>
+                                    </div>
+                                    <div className="dropdown-menu" id="dropdown-menu4" role="menu">
+                                        <div className="dropdown-content">
                                             <div className="dropdown-item">
-                                            <a href="#" className="dropdown-item" onClick={(e) => {
-                                            
-                                            let tmp = [...boxList]
-                                            let tmpId = a.id
-                                            let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], boxType: "number"};
-                                            setBoxList(tmp);
+                                                <a href="#" className="dropdown-item" onClick={(e) => {
 
-                                        }}>
-                                            number
-                                        </a>
-                                        <a href="#" className="dropdown-item" onClick={(e) => {
-                                            let tmp = [...boxList]
-                                            let tmpId = a.id
-                                            let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], boxType: "boolean"};
-                                            setBoxList(tmp);
+                                                    let tmp = [...boxList]
+                                                    let tmpId = a.id
+                                                    let findIndex = tmp.findIndex(a => a.id === tmpId)
+                                                    tmp[findIndex] = { ...tmp[findIndex], boxType: "number" };
+                                                    setBoxList(tmp);
 
-                                        }}>
-                                            boolean
-                                        </a>
-                                        <a href="#" className="dropdown-item" onClick={(e) => {
-                                            let tmp = [...boxList]
-                                            let tmpId = a.id
-                                            let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], boxType: "text"};
-                                            setBoxList(tmp);
+                                                }}>
+                                                    number
+                                                </a>
+                                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                                    let tmp = [...boxList]
+                                                    let tmpId = a.id
+                                                    let findIndex = tmp.findIndex(a => a.id === tmpId)
+                                                    tmp[findIndex] = { ...tmp[findIndex], boxType: "boolean" };
+                                                    setBoxList(tmp);
 
-                                        }}>
-                                            text
-                                        </a>
-                                        <a href="#" className="dropdown-item" onClick={(e) => {
-                                            let tmp = [...boxList]
-                                            let tmpId = a.id
-                                            let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], boxType: "multiple choice"};
-                                            setBoxList(tmp);
+                                                }}>
+                                                    boolean
+                                                </a>
+                                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                                    let tmp = [...boxList]
+                                                    let tmpId = a.id
+                                                    let findIndex = tmp.findIndex(a => a.id === tmpId)
+                                                    tmp[findIndex] = { ...tmp[findIndex], boxType: "text" };
+                                                    setBoxList(tmp);
 
-                                        }}>
-                                            multiple choice
-                                        </a>
-                                            </div>
+                                                }}>
+                                                    text
+                                                </a>
+                                                <a href="#" className="dropdown-item" onClick={(e) => {
+                                                    let tmp = [...boxList]
+                                                    let tmpId = a.id
+                                                    let findIndex = tmp.findIndex(a => a.id === tmpId)
+                                                    tmp[findIndex] = { ...tmp[findIndex], boxType: "multiple choice" };
+                                                    setBoxList(tmp);
+
+                                                }}>
+                                                    multiple choice
+                                                </a>
                                             </div>
                                         </div>
-                                        </div>
-
-
-                                    <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={() => {
-                                            
-                                        let tmp = [...boxList];
-                                        let tmpId = a.id
-                                        console.log(a.id)
-                                        setBoxList(tmp.filter((a) => a.id !== tmpId))
-                                    }}>
-                                        <DeleteOutlineIcon></DeleteOutlineIcon>
-                                    </button>
+                                    </div>
                                 </div>
 
-                                {
-                                    a.boxType == "multiple choice"
+
+                                <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={() => {
+
+                                    let tmp = [...boxList];
+                                    let tmpId = a.id;
+                                    setBoxList(tmp.filter((a) => a.id !== tmpId))
+                                }}>
+                                    <DeleteOutlineIcon></DeleteOutlineIcon>
+                                </button>
+                            </div>
+
+                            {
+                                a.boxType == "multiple choice"
                                     ?
-                                    <div className="control" style={{marginTop:'10px'}}>
-                                        <input type="radio" name="display" disabled/>
-                                        <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
+                                    <div className="control" style={{ marginTop: '10px' }}>
+                                        <input type="radio" name="display" disabled />
+                                        <input className="multiChoice" type='text' name='multi' onChange={(e) => {
                                             let tmp = [...boxList];
                                             let tmpId = a.id
                                             let tmpMulti = a.multi
                                             tmpMulti[0] = e.target.value;
                                             let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], multi: tmpMulti};
+                                            tmp[findIndex] = { ...tmp[findIndex], multi: tmpMulti };
                                             setBoxList(tmp);
                                         }
                                         }></input>
                                         <div></div>
-                                        <input type="radio" name="display" disabled/>
-                                        <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
+                                        <input type="radio" name="display" disabled />
+                                        <input className="multiChoice" type='text' name='multi' onChange={(e) => {
                                             let tmp = [...boxList];
                                             let tmpId = a.id
                                             let tmpMulti = a.multi
                                             tmpMulti[1] = e.target.value;
                                             let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], multi: tmpMulti};
+                                            tmp[findIndex] = { ...tmp[findIndex], multi: tmpMulti };
                                             setBoxList(tmp);
                                         }}></input>
                                         <div></div>
-                                        <input type="radio" name="display" disabled/>
-                                        <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
+                                        <input type="radio" name="display" disabled />
+                                        <input className="multiChoice" type='text' name='multi' onChange={(e) => {
                                             let tmp = [...boxList];
                                             let tmpId = a.id
                                             let tmpMulti = a.multi
                                             tmpMulti[2] = e.target.value;
                                             let findIndex = tmp.findIndex(a => a.id === tmpId)
-                                            tmp[findIndex] = {...tmp[findIndex], multi: tmpMulti};
+                                            tmp[findIndex] = { ...tmp[findIndex], multi: tmpMulti };
                                             setBoxList(tmp);
-                                            }}></input>
-                                        </div>
-                                        :
-                                        <></>
-                                }
+                                        }}></input>
+                                    </div>
+                                    :
+                                    <></>
+                            }
 
                         </div>
                     )
                 })
             }
             <button className="button is-danger" style={{ margin: '20px', width: '100px' }} onClick={async (e) => {
-                console.log(boxList);
                 await updateQuestions(e);
             }}>Save</button>
             <br></br>

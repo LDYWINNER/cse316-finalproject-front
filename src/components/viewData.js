@@ -116,8 +116,7 @@ const ViewData = () => {
 
     useEffect(() => {
         getChartData();
-        setChartResultData(chartData);
-    }, [chartData]);
+    }, []);
 
     return (
         <div>
