@@ -45,6 +45,8 @@ const LogDay = () => {
             console.log(tmp);
     }
 
+    // getData();
+    // setQuestions(tmp);
 
     useEffect(()=>{
         getData();
@@ -287,7 +289,7 @@ function MultiBox(props) {
                     console.log(props.obj)
 
                 }}></input>
-                <div>{props.obj.multi}</div>
+                <div>{props.obj.multi[0]}</div>
             </div>
 
             <div style={{ display: 'flex', margin: '10px'  }}>

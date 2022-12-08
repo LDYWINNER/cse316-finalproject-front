@@ -16,15 +16,16 @@ const EditQuestions = (props) => {
     const [boxList, setBoxList] = useState([]);
     const [id, setId] = useState(0);
 
-    const updateQuestions = () => {
-        axios.post('http://localhost:8080/editQuestions', {
+    const updateQuestions = async (e) => {
+        // e.stopPropagation();
+        await axios.post('http://localhost:8080/editQuestions', {
             boxList: boxList
         }).then((response) => {
             console.log(response);
         });
     };
 
-    const handleClick = async () => {
+    const handleClick = () => {
         let tmp = [...boxList];
         let box = {boxType: "number", text: "", multi: ['','',''] , id: id}
         setId(id => id + 1);
@@ -36,7 +37,7 @@ const EditQuestions = (props) => {
     // useEffect(() => {
     //     updateQuestions();
     //     console.log(boxList)
-    // }, [boxList])
+    // }, [])
 
     return (
         <div>
@@ -179,130 +180,14 @@ const EditQuestions = (props) => {
                     )
                 })
             }
-            <button className="button is-danger" style={{ margin: '20px', width: '100px' }} onClick={(e) => {
+            <button className="button is-danger" style={{ margin: '20px', width: '100px' }} onClick={async (e) => {
                 console.log(boxList);
-                updateQuestions();
+                await updateQuestions(e);
             }}>Save</button>
             <br></br>
         </div>
     )
 }
-
-
-
-// function QuestionBox(props) {
-//     // let [modeList] = ["number", "boolean", "text", "multiple choice"];
-//     const [mode, setMode] = useState(props.box.boxType);
-//     const [dropdown, setDropdown] = useState(false);
-//     let multi = ['', '', ''];
-
-//     return (
-//         <div className="box" style={{ margin: "10px" }}>
-//             <input className="input" type="text" placeholder="Text input" onChange={(e) => {
-//                 props.changeText(props.index, e.target.value);
-//             }}></input>
-
-//             <div className="dropdown-trigger" style={{ marginTop: '10px', display: 'flex' }}>
-//                 <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={() => {
-//                     if (dropdown) {
-//                         setDropdown(false);
-//                     } else {
-//                         setDropdown(true);
-//                     }
-//                 }}>
-//                     <span style={{ display: 'flex' }}>{mode}<KeyboardArrowDownIcon style={{ marginLeft: '10px' }} /></span>
-//                 </button>
-//                 <button style={{ marginLeft: "auto", backgroundColor: "transparent", border: 'transparent' }} onClick={() => {
-//                     props.deleteBox(props.index);
-//                     // console.log(props.boxList);
-//                 }}>
-//                     <DeleteOutlineIcon></DeleteOutlineIcon>
-//                 </button>
-//             </div>
-
-//             {
-//                 dropdown ?
-//                     <div className="dropdown is-active">
-//                         <div className="dropdown-menu" id="dropdown-menu3" role="menu">
-//                             <div className="dropdown-content">
-//                                 <a href="#" className="dropdown-item" onClick={(e) => {
-//                                     setMode("number");
-//                                     setDropdown(false);
-//                                     props.changeType(props.index, mode);
-//                                     console.log(props.boxList);
-//                                 }}>
-//                                     number
-//                                 </a>
-//                                 <a href="#" className="dropdown-item" onClick={(e) => {
-//                                     setMode("boolean");
-//                                     setDropdown(false);
-//                                     props.changeType(props.index, mode);
-
-//                                     console.log(props.boxList);
-//                                 }}>
-//                                     boolean
-//                                 </a>
-//                                 <a href="#" className="dropdown-item" onClick={(e) => {
-//                                     setMode("text");
-//                                     setDropdown(false);
-//                                     props.changeType(props.index, mode);
-
-//                                     console.log(props.boxList);
-//                                 }}>
-//                                     text
-//                                 </a>
-//                                 <a href="#" className="dropdown-item" onClick={(e) => {
-//                                     setMode("multiple choice");
-//                                     setDropdown(false);
-//                                     props.changeType(props.index, mode);
-
-//                                     console.log(props.boxList);
-//                                 }}>
-//                                     multiple choice
-//                                 </a>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     :
-//                     <></>
-//             }
-//             {
-//                 mode == "multiple choice"
-//                 ?
-//                 <div className="control" style={{marginTop:'10px'}}>
-//                     <input type="radio" name="display" disabled/>
-//                     <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
-//                         multi[0] = e.target.value
-//                         props.changeMulti(props.index, e.target.value, 0);
-//                         console.log(props.boxList.multi);
-//                         // multi.splice(0, 1, e.target.value);
-//                     }
-//                     }></input>
-//                     <div></div>
-//                     <input type="radio" name="display" disabled/>
-//                     <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
-//                         multi[1] = e.target.value
-//                         props.changeMulti(props.index, e.target.value, 1);
-//                         console.log(multi);
-
-//                         // multi.splice(1, 1, e.target.value);
-//                     }}></input>
-//                     <div></div>
-//                     <input type="radio" name="display" disabled/>
-//                     <input className="multiChoice" type='text' name='multi' onChange={(e)=>{
-//                         multi[2] = e.target.value
-//                         props.changeMulti(props.index, e.target.value, 2);
-//                         console.log(multi);
-
-//                             // multi.splice(2, 1, e.target.value);
-//                         }}></input>
-//                     </div>
-//                     :
-//                     <></>
-//             }
-//         </div>
-//     )
-// }
 
 
 
