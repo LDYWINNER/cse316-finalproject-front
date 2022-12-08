@@ -11,9 +11,8 @@ const ViewData = () => {
     let [chartResultData, setChartResultData] = useState({});
     let chartData = {};
 
-    const data = [
+    const booleanInitialData = [
         ["Question", "True", "False"],
-        ["2014", 1000, 400],
     ];
 
     const options = (title) => {
@@ -26,31 +25,31 @@ const ViewData = () => {
         )
     };
 
-    const BarChart = () => {
+    const BarChart = ({ data }) => {
         return (
             <Chart
                 chartType="Bar"
-                width="100%"
-                height="400px"
+                width="80%"
+                height="250px"
                 data={data}
                 options={options}
             />
         )
     };
 
-    const LineChart = () => {
+    const LineChart = ({ data }) => {
         return (
             <Chart
                 chartType="Line"
-                width="100%"
-                height="400px"
+                width="80%"
+                height="250px"
                 data={data}
                 options={options}
             />
         )
     };
 
-    const getChartData = async () => {
+    const getChartData = useCallback(async () => {
         const tempQuestions = await axios.get('http://localhost:8080/questions');
         const tempQuestionsData = tempQuestions.data;
         setQuestionsData(tempQuestionsData);
@@ -107,7 +106,8 @@ const ViewData = () => {
             }
         }
         console.log(chartData);
-    };
+
+    }, []);
 
     useEffect(() => {
         getChartData();
@@ -118,6 +118,8 @@ const ViewData = () => {
     return (
         <div>
             <h2>Summary of responses organized by Question</h2>
+            {console.log('im here')}
+            {console.log(chartResultData)}
             {
                 questionsData.map((obj, i) => {
                     if (questionsData[i].box_type === "number") {
@@ -128,7 +130,7 @@ const ViewData = () => {
                     } else if (questionsData[i].box_type === "boolean") {
                         //bar graph
                         return (
-                            <BarChart />
+                            <BarChart data={booleanInitialData.push([obj.text, chartData[questionsData[i].text][0], chartData[questionsData[i].text][1]])} />
                         );
                     } else if (questionsData[i].box_type === "multiple choice") {
                         //bar graph
