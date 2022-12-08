@@ -4,6 +4,7 @@ import { useState } from 'react';
 import "../css/app.css";
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import { SettingsInputAntennaTwoTone } from '@mui/icons-material';
 
 
 const LogDay = () => {
@@ -11,7 +12,8 @@ const LogDay = () => {
     let select = new Date();
     // let questions = [];
     const [questions, setQuestions] = useState([]);
-
+    const [answers, setAnswers] = useState([]);
+    let tmp = [];
     
 
     const [selectedYear, setSelectedYear] = useState(date.getFullYear());
@@ -24,29 +26,39 @@ const LogDay = () => {
         day: selectedDay
     });
 
-    const getData = () => {
-        const tempQuestions = axios.get('http://localhost:8080/questions');
-        const questions = tempQuestions.data;
-        for(let i = 0; i < questions.length; i++) {
-            questions[i].multi = JSON.parse(questions[i].multi);
+    const getData = async () => {
+        const tempQuestions = await axios.get('http://localhost:8080/questions');
+        // const questions = tempQuestions.data;
+        let copy = [...questions];
+        // copy.push(tempQuestions.data);
+        console.log(tempQuestions);
+        tmp = tempQuestions.data;
+
+        for(let i = 0; i < tmp.length; i++) {
+            tmp[i].multi = JSON.parse(tmp[i].multi);
         }
-        console.log(typeof(questions[0].multi));
-        return questions;
+
+        setQuestions(tmp);
+
+        console.log(questions);
+        console.log(tmp);
+
     }
 
 
     useEffect(()=>{
-        let tmp = getData();
+        getData();
         setQuestions(tmp);
+        console.log(questions);
     }, [])
 
     const saveData = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         axios.post('http://localhost:8080/answers', {
             month: selectedMonth,
             day: selectedDay,
             year: selectedYear,
-            answers: JSON.stringify()
+            answers: JSON.stringify(answers)
         }).then((response) => {
             console.log(response);
         });
@@ -143,6 +155,7 @@ const LogDay = () => {
     }, [])
 
 
+
     return (
         <div>
             <div style={{ display: 'flex', height: '80px' }}>
@@ -169,15 +182,32 @@ const LogDay = () => {
 
 
             </div>
-            {/* {
+            {
+
                 questions.map((obj, i) => {
 
+                    return(
+                        obj.box_type == 'number'
+                        ?
+                        <NumberBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></NumberBox>
+                        :
+                        obj.box_type == 'boolean'
+                        ?
+                        <BooleanBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></BooleanBox>
+                        :
+                        obj.box_type == 'text'
+                        ?
+                        <TextBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></TextBox>
+                        :
+                        <MultiBox key={i} obj={obj} answers={answers} setAnswers={setAnswers} index={i}></MultiBox>
+                    )
 
                 })
-            } */}
+            }
             <div>
                 <button className="button is-danger" style={{ margin: '10px', width: '100px' }} onClick={(e) => {
-
+                    saveData();
+                    console.log(answers);
                 }}>Submit</button>
             </div>
         </div>
@@ -189,8 +219,16 @@ function NumberBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
-            <div>text - number</div>
-            <input className='input' type='text' style={{ width: '200px' }}></input>
+            <div>{props.obj.text}</div>
+            <input className='input' type='text' style={{ width: '200px' }} defaultValue={props.answers[props.index]} onChange={(e)=>{
+
+                let tmp = [...props.answers];
+                let tmpText = e.value;
+                tmpText = e.target.value;
+                tmp[props.index] = tmpText
+                props.setAnswers(tmp);
+
+            }}></input>
         </div>
     )
 }
@@ -199,13 +237,19 @@ function BooleanBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
-            <div>text</div>
+            <div>{props.obj.text}</div>
             <div style={{ display: 'flex' }}>
                 <input type='radio' value='True' name='boolean' style={{ marginRight: '5px' }} onChange={(e) => {
+                    let tmp = [...props.answers];
+                    tmp[props.index] = 'true';
+                    props.setAnswers(tmp);
 
                 }} ></input> True
                 <div style={{ marginRight: '50px' }}></div>
                 <input type='radio' value='False' name='boolean' style={{ marginRight: '5px' }} onChange={(e) => {
+                    let tmp = [...props.answers];
+                    tmp[props.index] = 'false';
+                    props.setAnswers(tmp);
 
                 }}></input> False
             </div>
@@ -218,8 +262,14 @@ function TextBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
-            <div>text - text</div>
-            <input className='input' type='text'></input>
+            <div>{props.obj.text}</div>
+            <input className='input' type='text' onChange={(e)=>{
+                let tmp = [...props.answers];
+                let tmpText = e.target.value;
+                tmp[props.index] = tmpText
+                props.setAnswers(tmp);
+
+            }}></input>
         </div>
     )
 }
@@ -228,27 +278,37 @@ function MultiBox(props) {
 
     return (
         <div className="box" style={{ margin: "10px" }}>
-            <div>text</div>
-            <div style={{ display: 'flex' }}>
+            <div>{props.obj.text}</div>
+            <div style={{ display: 'flex', margin: '10px' }}>
                 <input type='radio' value='?' name='multi' onChange={(e) => {
+                    let tmp = [...props.answers];
+                    tmp[props.index] = props.obj.multi[0];
+                    props.setAnswers(tmp);
+                    console.log(props.obj)
 
                 }}></input>
-                <div> multiple choice 1</div>
+                <div>{props.obj.multi}</div>
             </div>
 
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', margin: '10px'  }}>
                 <input type='radio' value='?' name='multi' onChange={(e) => {
+                    let tmp = [...props.answers];
+                    tmp[props.index] = props.obj.multi[1];
+                    props.setAnswers(tmp);
 
                 }}></input>
-                <div> multiple choice 2</div>
+                <div>{props.obj.multi[1]}</div>
 
             </div>
 
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', margin: '10px'  }}>
                 <input type='radio' value='?' name='multi' onChange={(e) => {
+                    let tmp = [...props.answers];
+                    tmp[props.index] = props.obj.multi[2];
+                    props.setAnswers(tmp);
 
                 }}></input>
-                <div> multiple choice 3</div>
+                <div>{props.obj.multi[2]}</div>
 
 
             </div>

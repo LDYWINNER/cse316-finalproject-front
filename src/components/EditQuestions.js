@@ -12,12 +12,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-const EditQuestions = () => {
+const EditQuestions = (props) => {
     const [boxList, setBoxList] = useState([]);
     const [id, setId] = useState(0);
 
-    const updateQuestions = async () => {
-        await axios.post('http://localhost:8080/editQuestions', {
+    const updateQuestions = () => {
+        axios.post('http://localhost:8080/editQuestions', {
             boxList: boxList
         }).then((response) => {
             console.log(response);
@@ -26,17 +26,17 @@ const EditQuestions = () => {
 
     const handleClick = async () => {
         let tmp = [...boxList];
-        let box = { boxType: "number", text: "", multi: ['','',''] , id: id}
+        let box = {boxType: "number", text: "", multi: ['','',''] , id: id}
         setId(id => id + 1);
         tmp.unshift(box);
         setBoxList(tmp);
     }
 
 
-    useEffect(() => {
-        console.log(boxList)
-
-    }, [boxList])
+    // useEffect(() => {
+    //     updateQuestions();
+    //     console.log(boxList)
+    // }, [boxList])
 
     return (
         <div>
@@ -55,7 +55,7 @@ const EditQuestions = () => {
                     return (
                         // <div key={i}><QuestionBox boxList={boxList} changeType={changeType} changeText={changeText} deleteBox={deleteBox} changeMulti={changeMulti} box={a} index={i}></QuestionBox></div>
                         <div key={i} className="box" style={{ margin: "10px" }}>
-                            <input className="input" type="text" placeholder="Text input" onChange={(e) => {
+                            <input className="input" type="text" placeholder="Text input" defaultValue='' onChange={(e) => {
                                 let tmp = [...boxList];
                                 let tmpId = a.id
                                 let findIndex = tmp.findIndex(a => a.id === tmpId)
@@ -180,6 +180,7 @@ const EditQuestions = () => {
                 })
             }
             <button className="button is-danger" style={{ margin: '20px', width: '100px' }} onClick={(e) => {
+                console.log(boxList);
                 updateQuestions();
             }}>Save</button>
             <br></br>
