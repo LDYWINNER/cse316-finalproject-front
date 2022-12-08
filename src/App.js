@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
+import ViewData from "./components/viewData";
+import DailyView from "./components/dailyView";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import EditQuestions from './components/EditQuestions';
@@ -25,21 +26,25 @@ function App() {
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/dashboard">
-          <Navbar image={image} setImage={setImage}/>
-          <Dashboard />
+        <Route path="/viewData">
+          <Navbar image={image} setImage={setImage} />
+          <ViewData />
+        </Route>
+        <Route path="/dailyView">
+          <Navbar image={image} setImage={setImage} />
+          <DailyView />
         </Route>
         <Route path="/editQuestions">
-          <Navbar image={image} setImage={setImage}/>
+          <Navbar image={image} setImage={setImage} />
           <EditQuestions />
         </Route>
         <Route path="/logDay">
-          <Navbar image={image} setImage={setImage}/>
+          <Navbar image={image} setImage={setImage} />
           <LogDay />
         </Route>
         <Route path="/profile">
-          <Navbar image={image} setImage={setImage}/>
-          <Profile imageUrl={imageUrl} setImageUrl={setImageUrl} image={image} setImage={setImage}/>
+          <Navbar image={image} setImage={setImage} />
+          <Profile imageUrl={imageUrl} setImageUrl={setImageUrl} image={image} setImage={setImage} />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -25,15 +25,15 @@ const Navbar = (props) => {
                         </NavLink>
                     </li>
                     <li style={{ margin: '10px' }}>
-                        <NavLink to='/dashboard' style={{ color: "black" }} activeStyle={{ color: '#66bfbf' }}>
+                        <NavLink to='/viewData' style={{ color: "black" }} activeStyle={{ color: '#66bfbf' }}>
                             View Data
                         </NavLink>
                     </li>
                 </div>
-                <li style={{margin: '10px'}}>
-                        <NavLink to='/profile' style={{color:"black"}} activeStyle={{ color: '#66bfbf' }}>
-                            <img src={props.image} style={{margin:'auto', width: '45px', borderRadius: '70%'}}></img>   
-                        </NavLink>
+                <li style={{ margin: '10px' }}>
+                    <NavLink to='/profile' style={{ color: "black" }} activeStyle={{ color: '#66bfbf' }}>
+                        <img src={props.image} style={{ margin: 'auto', width: '45px', borderRadius: '70%' }}></img>
+                    </NavLink>
                 </li>
             </ul>
         </nav>

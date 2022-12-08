@@ -26,28 +26,19 @@ const LogDay = () => {
         day: selectedDay
     });
 
-    const getData = async () => {
-        const tempQuestions = await axios.get('http://localhost:8080/questions');
-        // const questions = tempQuestions.data;
-        let copy = [...questions];
-        // copy.push(tempQuestions.data);
-        console.log(tempQuestions);
-        tmp = tempQuestions.data;
-
-        for(let i = 0; i < tmp.length; i++) {
-            tmp[i].multi = JSON.parse(tmp[i].multi);
+    const getData = () => {
+        const tempQuestions = axios.get('http://localhost:8080/questions');
+        const questions = tempQuestions.data;
+        for(let i = 0; i < questions.length; i++) {
+            questions[i].multi = JSON.parse(questions[i].multi);
         }
-
-        setQuestions(tmp);
-
-        console.log(questions);
-        console.log(tmp);
-
+        console.log(typeof(questions[0].multi));
+        return questions;
     }
 
 
     useEffect(()=>{
-        getData();
+        let tmp = getData();
         setQuestions(tmp);
         console.log(questions);
     }, [])
